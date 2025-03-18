@@ -17,7 +17,7 @@ const SupportGroups2 = () => {
       url: "https://mpowerminds.com/assets/img/root/Mpower%20Logo-04.svg",
     },
 
-    {
+    { 
       type: "article",
 
       link: "http://http://kashmirlifeline.org/contact.php.org/",
