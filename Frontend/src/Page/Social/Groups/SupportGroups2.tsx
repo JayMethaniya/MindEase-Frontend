@@ -57,6 +57,6 @@ const SupportGroups2 = () => {
       </div>
     </div>
   );
-};
+}; 
 
 export default SupportGroups2;
