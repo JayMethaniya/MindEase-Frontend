@@ -51,7 +51,7 @@ const SupportGroups2 = () => {
               <img src={groups.url} alt={groups.title} className="object-contain w-[500px]" />
 
               <h3>{groups.title}</h3>
-            </a>
+            </a> 
           </div>
         ))}
       </div>
