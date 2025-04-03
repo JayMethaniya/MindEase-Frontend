@@ -51,7 +51,6 @@ const MoodTracker = () => {
     const fetchMoodHistory = async () => {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("token");
-
       if (!userId) {
         console.error("User ID is not available.");
         return;

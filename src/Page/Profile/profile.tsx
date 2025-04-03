@@ -2,7 +2,7 @@ import { Phone, Edit } from "@mui/icons-material";
 import { MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import logo from '../../assets/doctor_consultation_02.jpg'
 interface BaseProfile {
   fullName: string;
   email: string;
@@ -24,7 +24,7 @@ export default function MainContent() {
   const [profile, setProfile] = useState<ProfileType | null>(null);
   const role = profile?.role
   const isDoctor = role === 'doctor'
-
+console.log(profile)
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -62,7 +62,7 @@ export default function MainContent() {
         />
         <div className="absolute top-40 left-1/2 transform -translate-x-1/2 text-center">
           <img
-            src={profile.profilePhoto || "https://via.placeholder.com/150"}
+            src={profile.profilePhoto || logo}
             alt="Profile"
             className="w-28 h-28 rounded-full border-4 border-white shadow-lg"
           />

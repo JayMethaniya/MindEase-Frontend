@@ -52,7 +52,7 @@ const Header: React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-6 text-white text-sm lg:text-base">
-            <NavLink to="/home" className="p-2 hover:text-[#1E4747] transition">
+            <NavLink to="/" className="p-2 hover:text-[#1E4747] transition">
               Home
             </NavLink>
             {token && (
@@ -82,6 +82,16 @@ const Header: React.FC = () => {
                 { name: "Wellness Quiz", path: "/social/quiz" },
                 { name: "Blog", path: "/social/blog" },
                 { name: "Relaxation", path: "/social/relax" },
+              ]}
+            />
+             <DropdownMenu
+              title="Page"
+              items={[
+                ...(token
+                  ? []
+                  : []), // Only add if token exists
+                { name: "Contact Us", path: "/page/contactUs" },
+                
               ]}
             />
           </nav>
@@ -127,7 +137,7 @@ const Header: React.FC = () => {
 
         {/* Sidebar Navigation */}
         <nav className="flex flex-col gap-4 text-[#1E4747] font-medium">
-          <NavLink to="/home" className="p-2" onClick={closeSidebar}>
+          <NavLink to="/" className="p-2" onClick={closeSidebar}>
             Home
           </NavLink>
           {token && (
@@ -144,16 +154,28 @@ const Header: React.FC = () => {
               { name: "Videos", path: "/resources/video" },
             ]}
           />
-          <DropdownMenu
-            title="Community"
-            items={[
-              { name: "Journaling", path: "/social/Journaling" },
-              { name: "Support Groups", path: "/social/group" },
-              { name: "Wellness Quiz", path: "/social/quiz" },
-              { name: "Blog", path: "/social/blog" },
-              { name: "Relaxation", path: "/social/relax" },
-            ]}
-          />
+           <DropdownMenu
+              title="Community"
+              items={[
+                ...(token
+                  ? [{ name: "Journaling", path: "/social/Journaling" }]
+                  : []), // Only add if token exists
+                { name: "Support Groups", path: "/social/group" },
+                { name: "Wellness Quiz", path: "/social/quiz" },
+                { name: "Blog", path: "/social/blog" },
+                { name: "Relaxation", path: "/social/relax" },
+              ]}
+            />
+           <DropdownMenu
+              title="Page"
+              items={[
+                ...(token
+                  ? []
+                  : []), // Only add if token exists
+                { name: "Contact Us", path: "/page/contactUs" },
+                
+              ]}
+            />
         </nav>
       </aside>
     </>

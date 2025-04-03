@@ -1,5 +1,6 @@
 import React from "react";
 import homeMain from "../../assets/5 - Cardiologist.png";
+import { Link } from "react-router-dom";
 
 export default function HomeMain() {
   return (
@@ -11,13 +12,15 @@ export default function HomeMain() {
           <span className="text-[#287371]">Prioritize Mental Wellness</span>
         </h1>
         <p className="text-base sm:text-lg text-[#3D4F4E] mt-4">
-          Your mental health is just as important as your physical health. 
-          Let’s take a step towards self-care, emotional well-being, and a 
-          healthier mind.
+          Your mental health is just as important as your physical health. Let’s
+          take a step towards self-care, emotional well-being, and a healthier
+          mind.
         </p>
-        <button className="mt-6 px-6 py-3 bg-[#287371] text-white text-lg rounded-full shadow-lg hover:bg-[#1F5B5B] transition">
-          Get Support
-        </button>
+        <div className="mt-6">
+          <Link to="/page/contactUs" className=" px-6 py-3 bg-[#287371] text-white text-lg rounded-full shadow-lg hover:bg-[#1F5B5B] transition">
+            Get Support
+          </Link>
+        </div>
       </div>
 
       <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">

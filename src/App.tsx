@@ -20,6 +20,7 @@ import DoctorSignup from "./Page/Auth/DoctorSignup/index"
 import DoctorHome from './Page/Home/index'
 import DoctorProtectedWrapper from './routes/ProtectedWrapper/index'
 import Setting from './Page/Profile/ProfileSetting'
+import ContactUs from './Page/ContactUs/index'
 
 
 const publicRoutes = [
@@ -37,6 +38,7 @@ const publicRoutes = [
   { path: "/resources/articles", element: <DefaultLayout><Articles/></DefaultLayout> },
   { path: "/resources/initiatives", element: <DefaultLayout><Initiatives/> </DefaultLayout> },
   { path: "/resources/video", element: <DefaultLayout><VideoResources/> </DefaultLayout> },
+  { path: "/page/contactUs", element: <DefaultLayout><ContactUs/> </DefaultLayout> },
   { path: "/profile", element: <DefaultProfile><Profile/></DefaultProfile>  },
   { path: "/setting", element: <DefaultProfile><Setting/></DefaultProfile>  },
  
