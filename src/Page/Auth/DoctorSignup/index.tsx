@@ -50,7 +50,6 @@ const Signup: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setMessage(null);
-    localStorage.setItem("role", formData.role)
 
     // Prepare FormData for the POST request
     const formPayload = new FormData();

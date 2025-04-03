@@ -26,7 +26,6 @@ const Signup: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setMessage(null);
-localStorage.setItem("role", formData.role)
     try {
       const response = await axios.post(
         "http://localhost:3001/user/signup",
