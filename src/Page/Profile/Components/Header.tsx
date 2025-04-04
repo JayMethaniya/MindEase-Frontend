@@ -7,8 +7,9 @@ interface HeaderProps {
 export default function Header({ toggleSidebar }: HeaderProps) {
   const role = localStorage.getItem("role");
   const isDoctor = role === "doctor";
+
   return (
-    <header className="bg-gradient-to-r from-[#A7D7C5] to-[#6AA889] shadow-md p-4 flex justify-between items-center">
+    <header className="bg-gradient-to-r from-[#A7D7C5] to-[#6AA889] shadow-md p-4 flex justify-between items-center relative z-30">
       <button
         onClick={toggleSidebar}
         className="md:hidden p-2 bg-gray-200 rounded"

@@ -1,5 +1,6 @@
 import React from "react";
 import CTA from "../../assets/Frame 80.png";
+import { Link } from "react-router-dom";
 
 const Challenges: React.FC = () => {
   return (
@@ -29,9 +30,12 @@ const Challenges: React.FC = () => {
         </p>
 
         {/* Start Challenge Button */}
-        <button className="mt-6 px-6 py-3 bg-[#287371] text-white text-lg rounded-full shadow-lg hover:bg-[#1F5B5B] transition">
+        <div className="mt-7">
+        <Link to="/challenge" className=" px-6 py-3 bg-[#287371] text-white text-lg rounded-full shadow-lg hover:bg-[#1F5B5B] transition">
           Start Challenge
-        </button>
+        </Link>
+        </div>
+        
       </div>
     </div>
   );

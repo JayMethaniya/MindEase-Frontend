@@ -79,8 +79,6 @@ const Header: React.FC = () => {
           >
             <Menu className="text-[#1E4747]" fontSize="large" />
           </button>
-
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-6 text-white text-sm lg:text-base">
             <NavLink to="/" className="p-2 hover:text-[#1E4747] transition">
               Home
@@ -93,17 +91,15 @@ const Header: React.FC = () => {
                 Mood Tracking
               </NavLink>
             )}
-
             <DropdownMenu
               title="Resources"
               items={[
                 { name: "Articles", path: "/resources/articles" },
                 { name: "Initiatives", path: "/resources/initiatives" },
                 { name: "Videos", path: "/resources/video" },
-                { name: "Blog", path: "/social/blog" },
+                { name: "Blog", path: "/resources/blog" },
               ]}
             />
-
             <DropdownMenu
               title="Page"
               items={[
@@ -119,21 +115,20 @@ const Header: React.FC = () => {
               ]}
             />
           </nav>
-
-          {/* Icons */}
           <div className="flex items-center gap-4">
-            <button className="p-2 rounded-full h-10 w-10 flex items-center justify-center">
-              <Notifications className="text-[#1E4747]" fontSize="large" />
-            </button>
-
             {token ? (
-              <Link to="/profile" className="flex items-center gap-2">
-                <img
-                  src={profile}
-                  alt="Profile"
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-              </Link>
+              <div className="flex items-center gap-4">
+                <button className="p-2 rounded-full h-10 w-10 flex items-center justify-center">
+                  <Notifications className="text-[#1E4747]" fontSize="large" />
+                </button>
+                <Link to="/profile" className="flex items-center gap-2">
+                  <img
+                    src={profile}
+                    alt="Profile"
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                </Link>
+              </div>
             ) : (
               <Link
                 to="/login"
@@ -145,8 +140,6 @@ const Header: React.FC = () => {
           </div>
         </div>
       </header>
-
-      {/* Sidebar (Mobile) */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40"
@@ -158,12 +151,9 @@ const Header: React.FC = () => {
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300`}
       >
-        {/* Close Button */}
         <button className="mb-4" onClick={closeSidebar}>
           <Close className="text-[#1E4747]" fontSize="large" />
         </button>
-
-        {/* Sidebar Navigation */}
         <nav className="flex flex-col gap-4 text-[#1E4747] font-medium">
           <NavLink to="/" className="p-2" onClick={closeSidebar}>
             Home
@@ -173,28 +163,22 @@ const Header: React.FC = () => {
               Mood Tracking
             </NavLink>
           )}
-
           <DropdownMenu
             title="Resources"
             items={[
               { name: "Articles", path: "/resources/articles" },
               { name: "Initiatives", path: "/resources/initiatives" },
               { name: "Videos", path: "/resources/video" },
-              { name: "Blog", path: "/social/blog" },
+              { name: "Blog", path: "/resources/blog" },
             ]}
           />
-
           <DropdownMenu
             title="Page"
             items={[
-              ...(token
-                ? [{ name: "Add Blog", path: "/social/AddBlog" }]
-                : []), // Only add if token exists
+              ...(token ? [{ name: "Add Blog", path: "/social/AddBlog" }] : []), // Only add if token exists
               { name: "Contact Us", path: "/page/contactUs" },
-
               { name: "Support Groups", path: "/social/group" },
               { name: "Wellness Quiz", path: "/social/quiz" },
-
               { name: "Relaxation", path: "/social/relax" },
             ]}
           />

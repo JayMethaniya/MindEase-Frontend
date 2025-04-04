@@ -1,54 +1,59 @@
-import { LogOut, User } from "lucide-react";
+import { Home, LogOut, User } from "lucide-react";
 import logo from "../../../assets/logo.png";
 import { Settings } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-
 interface SidebarProps {
   sidebarOpen: boolean;
+  toggleSidebar: () => void;
 }
 
-export default function Sidebar({ sidebarOpen }: SidebarProps) {
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
+  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
   const navigate = useNavigate();
-  
+
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove token
-    localStorage.removeItem("user");
-    localStorage.removeItem("role"); 
-    localStorage.removeItem("dailyGoals"); 
-    localStorage.removeItem("loglevel"); 
-    localStorage.removeItem("userId")
-    localStorage.removeItem("dailyGoals")
-    setToken(null); // Update state
-    navigate("/"); // Redirect to login page
+    localStorage.clear();
+    setToken(null);
+    navigate("/");
   };
-  
+
   return (
-    <aside
-      className={`bg-[#A7D7C5] text-white w-64 p-5 flex flex-col justify-between space-y-6 ${
-        sidebarOpen ? "block" : "hidden"
-      } md:block`}
-    >
-      <div className="flex flex-col space-y-2">
-        <div className="flex items-center justify-center">
-          <img src={logo} alt="logo" className="w-44" />
+    <>
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={toggleSidebar}
+        ></div>
+      )}
+
+      <aside
+        className={`fixed md:relative top-0 left-0 h-full w-64 bg-[#A7D7C5] text-white p-5 flex flex-col justify-between transition-transform duration-300 z-50
+        ${sidebarOpen ? "translate-x-0"  : "-translate-x-full"} md:translate-x-0 `}
+      >
+        <div className="flex flex-col space-y-2">
+          <div className="flex items-center justify-center">
+            <img src={logo} alt="logo" className="w-44" />
+          </div>
+          <div className="mt-5 space-y-4">
+            <Link to="/" className="flex bg-[#3a8585] p-3 rounded-3xl hover:bg-[#1E4747]  items-center space-x-2">
+             <Home/> <span>Home</span>
+            </Link>
+            <Link to="/profile" className="flex items-center space-x-2 bg-[#3a8585] p-3 rounded-3xl hover:bg-[#1E4747]">
+              <User /> <span>Profile</span>
+            </Link>
+            <Link to="/setting" className="flex items-center space-x-2 bg-[#3a8585] p-3 rounded-3xl hover:bg-[#1E4747]">
+              <Settings /> <span>Setting</span>
+            </Link>
+          </div>
         </div>
-        <div className="mt-5 space-y-4">
-          <Link to="/profile" className="flex items-center space-x-2">
-            <User /> <span>Profile</span>
-          </Link>
-          <Link to="/setting" className="flex items-center space-x-2">
-            <Settings /> <span>Setting</span>
-          </Link>
+        <div className="w-full">
+          <button onClick={handleLogout} className="flex w-full items-center space-x-2 bg-[#3a8585] p-3 rounded-3xl hover:bg-[#1E4747]">
+            <LogOut /> <span>Logout</span>
+          </button>
         </div>
-      </div>
-      <div>
-        <button onClick={handleLogout}  className="flex items-center space-x-2">
-          <LogOut /> <span>Logout</span>
-        </button>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }

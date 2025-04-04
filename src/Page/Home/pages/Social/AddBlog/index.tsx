@@ -32,7 +32,7 @@ const CreateBlog: React.FC = () => {
 
       if (response.status === 201) {
         alert("Blog created successfully!");
-        navigate("/blogs");
+        navigate("/resources/blog");
       } else {
         alert("Failed to create blog.");
       }

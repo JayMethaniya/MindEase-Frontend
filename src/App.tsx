@@ -22,6 +22,7 @@ import DoctorProtectedWrapper from './routes/ProtectedWrapper/index'
 import Setting from './Page/Profile/ProfileSetting'
 import ContactUs from './Page/ContactUs/index'
 import BlogDetail from "./Page/Home/pages/Social/Blogs/BlogDetails";
+import Challenge from "./components/7dayChallenge/index";
 
 const publicRoutes = [
   { path: "/login", element: <Login /> },
@@ -32,7 +33,7 @@ const publicRoutes = [
   { path: "/social/AddBlog", element: <DefaultLayout><AddBlog /></DefaultLayout> },
   { path: "/social/group", element: <DefaultLayout><Group /></DefaultLayout> },
   { path: "/social/quiz", element: <DefaultLayout><Quiz /></DefaultLayout> },
-  { path: "/social/blog", element: <DefaultLayout><Blog /></DefaultLayout> },
+  { path: "/resources/blog", element: <DefaultLayout><Blog /></DefaultLayout> },
    {path:"/quiz/:quizId", element:<DefaultLayout><QuizComponent /></DefaultLayout>},
   { path: "/social/relax", element: <DefaultLayout><Relax /></DefaultLayout> },
   { path: "/resources/articles", element: <DefaultLayout><Articles/></DefaultLayout> },
@@ -41,7 +42,8 @@ const publicRoutes = [
   { path: "/page/contactUs", element: <DefaultLayout><ContactUs/> </DefaultLayout> },
   { path: "/profile", element: <DefaultProfile><Profile/></DefaultProfile>  },
   { path: "/setting", element: <DefaultProfile><Setting/></DefaultProfile>  },
-  { path:"/blog/:id", element:<BlogDetail /> }
+  { path:"/blog/:id", element:<BlogDetail /> },
+  { path:"/challenge", element:<Challenge /> }
 ]
 
 const protectedRoutes = [
