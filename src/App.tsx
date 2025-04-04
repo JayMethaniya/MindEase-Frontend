@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import MoodTracking from "./Page/Home/pages/MoodTracking/index";
-import Journaling from "./Page/Home/pages/Social/Journaling/index";
+import AddBlog from "./Page/Home/pages/Social/AddBlog/index";
 import Home from "./Page/Home/index";
 import Profile from './Page/Profile/profile'
 import DefaultLayout from "./Layout/Default";
@@ -29,7 +29,7 @@ const publicRoutes = [
   { path: "/doctor-signup", element: <DoctorSignup/> },
   { path: "/", element: <DefaultLayout><Home /></DefaultLayout> },
   { path: "/mood-tracking", element: <DefaultLayout><MoodTracking /></DefaultLayout> },
-  { path: "/social/Journaling", element: <DefaultLayout><Journaling /></DefaultLayout> },
+  { path: "/social/AddBlog", element: <DefaultLayout><AddBlog /></DefaultLayout> },
   { path: "/social/group", element: <DefaultLayout><Group /></DefaultLayout> },
   { path: "/social/quiz", element: <DefaultLayout><Quiz /></DefaultLayout> },
   { path: "/social/blog", element: <DefaultLayout><Blog /></DefaultLayout> },

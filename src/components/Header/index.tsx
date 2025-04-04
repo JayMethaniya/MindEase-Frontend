@@ -100,25 +100,22 @@ const Header: React.FC = () => {
                 { name: "Articles", path: "/resources/articles" },
                 { name: "Initiatives", path: "/resources/initiatives" },
                 { name: "Videos", path: "/resources/video" },
-              ]}
-            />
-            <DropdownMenu
-              title="Community"
-              items={[
-                ...(token
-                  ? [{ name: "Journaling", path: "/social/Journaling" }]
-                  : []), // Only add if token exists
-                { name: "Support Groups", path: "/social/group" },
-                { name: "Wellness Quiz", path: "/social/quiz" },
                 { name: "Blog", path: "/social/blog" },
-                { name: "Relaxation", path: "/social/relax" },
               ]}
             />
+
             <DropdownMenu
               title="Page"
               items={[
-                ...(token ? [] : []), // Only add if token exists
+                ...(token
+                  ? [{ name: "Add Blog", path: "/social/AddBlog" }]
+                  : []), // Only add if token exists
                 { name: "Contact Us", path: "/page/contactUs" },
+
+                { name: "Support Groups", path: "/social/group" },
+                { name: "Wellness Quiz", path: "/social/quiz" },
+
+                { name: "Relaxation", path: "/social/relax" },
               ]}
             />
           </nav>
@@ -183,25 +180,22 @@ const Header: React.FC = () => {
               { name: "Articles", path: "/resources/articles" },
               { name: "Initiatives", path: "/resources/initiatives" },
               { name: "Videos", path: "/resources/video" },
-            ]}
-          />
-          <DropdownMenu
-            title="Community"
-            items={[
-              ...(token
-                ? [{ name: "Journaling", path: "/social/Journaling" }]
-                : []), // Only add if token exists
-              { name: "Support Groups", path: "/social/group" },
-              { name: "Wellness Quiz", path: "/social/quiz" },
               { name: "Blog", path: "/social/blog" },
-              { name: "Relaxation", path: "/social/relax" },
             ]}
           />
+
           <DropdownMenu
             title="Page"
             items={[
-              ...(token ? [] : []), // Only add if token exists
+              ...(token
+                ? [{ name: "Add Blog", path: "/social/AddBlog" }]
+                : []), // Only add if token exists
               { name: "Contact Us", path: "/page/contactUs" },
+
+              { name: "Support Groups", path: "/social/group" },
+              { name: "Wellness Quiz", path: "/social/quiz" },
+
+              { name: "Relaxation", path: "/social/relax" },
             ]}
           />
         </nav>
