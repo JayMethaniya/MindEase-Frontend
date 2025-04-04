@@ -21,7 +21,7 @@ import DoctorHome from './Page/Home/index'
 import DoctorProtectedWrapper from './routes/ProtectedWrapper/index'
 import Setting from './Page/Profile/ProfileSetting'
 import ContactUs from './Page/ContactUs/index'
-
+import BlogDetail from "./Page/Home/pages/Social/Blogs/BlogDetails";
 
 const publicRoutes = [
   { path: "/login", element: <Login /> },
@@ -41,7 +41,7 @@ const publicRoutes = [
   { path: "/page/contactUs", element: <DefaultLayout><ContactUs/> </DefaultLayout> },
   { path: "/profile", element: <DefaultProfile><Profile/></DefaultProfile>  },
   { path: "/setting", element: <DefaultProfile><Setting/></DefaultProfile>  },
- 
+  { path:"/blog/:id", element:<BlogDetail /> }
 ]
 
 const protectedRoutes = [

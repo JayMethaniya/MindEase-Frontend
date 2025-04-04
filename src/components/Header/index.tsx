@@ -1,14 +1,44 @@
 import { useState, useEffect } from "react";
-import { Notifications, Menu, Close, AccountCircle } from "@mui/icons-material";
+import { Notifications, Menu, Close } from "@mui/icons-material";
 import { NavLink, Link } from "react-router-dom";
 import DropdownMenu from "../DropDown/index";
 import logo from "../../assets/logo.png";
+import avatar from "../../assets/avatar.png";
+import axios from "axios";
+interface ProfileType {
+  profilePhoto?: string;
+}
 
 const Header: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [token, setToken] = useState<string | null>();
+  const [profile, setProfilePhoto] = useState("");
+  useEffect(() => {
+    const img = { avatar };
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No authentication token found");
+          return;
+        }
+        const response = await axios.get<ProfileType>(
+          `http://localhost:3001/user/profile`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          }
+        );
+        setProfilePhoto(response.data.profilePhoto || img.avatar);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
 
+    fetchProfile();
+  }, []);
+  console.log(profile);
   useEffect(() => {
     setToken(localStorage.getItem("token"));
     const handleScroll = () => {
@@ -84,14 +114,11 @@ const Header: React.FC = () => {
                 { name: "Relaxation", path: "/social/relax" },
               ]}
             />
-             <DropdownMenu
+            <DropdownMenu
               title="Page"
               items={[
-                ...(token
-                  ? []
-                  : []), // Only add if token exists
+                ...(token ? [] : []), // Only add if token exists
                 { name: "Contact Us", path: "/page/contactUs" },
-                
               ]}
             />
           </nav>
@@ -104,7 +131,11 @@ const Header: React.FC = () => {
 
             {token ? (
               <Link to="/profile" className="flex items-center gap-2">
-                <AccountCircle className="text-gray-700" fontSize="large" />
+                <img
+                  src={profile}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
               </Link>
             ) : (
               <Link
@@ -154,28 +185,25 @@ const Header: React.FC = () => {
               { name: "Videos", path: "/resources/video" },
             ]}
           />
-           <DropdownMenu
-              title="Community"
-              items={[
-                ...(token
-                  ? [{ name: "Journaling", path: "/social/Journaling" }]
-                  : []), // Only add if token exists
-                { name: "Support Groups", path: "/social/group" },
-                { name: "Wellness Quiz", path: "/social/quiz" },
-                { name: "Blog", path: "/social/blog" },
-                { name: "Relaxation", path: "/social/relax" },
-              ]}
-            />
-           <DropdownMenu
-              title="Page"
-              items={[
-                ...(token
-                  ? []
-                  : []), // Only add if token exists
-                { name: "Contact Us", path: "/page/contactUs" },
-                
-              ]}
-            />
+          <DropdownMenu
+            title="Community"
+            items={[
+              ...(token
+                ? [{ name: "Journaling", path: "/social/Journaling" }]
+                : []), // Only add if token exists
+              { name: "Support Groups", path: "/social/group" },
+              { name: "Wellness Quiz", path: "/social/quiz" },
+              { name: "Blog", path: "/social/blog" },
+              { name: "Relaxation", path: "/social/relax" },
+            ]}
+          />
+          <DropdownMenu
+            title="Page"
+            items={[
+              ...(token ? [] : []), // Only add if token exists
+              { name: "Contact Us", path: "/page/contactUs" },
+            ]}
+          />
         </nav>
       </aside>
     </>

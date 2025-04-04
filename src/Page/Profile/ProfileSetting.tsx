@@ -24,6 +24,7 @@ export default function Settings() {
     hospital: "",
     degrees: "",
   });
+
   const navigate = useNavigate();
   const UserRole = localStorage.getItem("role");
   const isDoctor = UserRole === "doctor";
@@ -35,23 +36,35 @@ export default function Settings() {
         if (!token) return;
 
         const response = await axios.get<Profile>(
-          `http://localhost:3001/${isDoctor ? "doctor" : "user"}/profile`,
+          `http://localhost:3001/user/profile`,
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
           }
         );
-        setProfile(response.data);
+
+        // Ensure fields always have default values
+        setProfile((prev) => ({
+          fullName: response.data.fullName || "",
+          email: response.data.email || "",
+          mobileNumber: response.data.mobileNumber || "",
+          address: response.data.address || "",
+          profilePhoto: null, // File should be null initially
+          specialization: response.data.specialization || "",
+          hospital: response.data.hospital || "",
+          degrees: response.data.degrees || "",
+        }));
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
     };
+
     fetchProfile();
   }, [isDoctor]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setProfile((prev) => ({ ...prev, [name]: value }));
+    setProfile((prev) => ({ ...prev, [name]: value || "" }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,6 +78,7 @@ export default function Settings() {
     try {
       const token = localStorage.getItem("token");
       const formData = new FormData();
+
       Object.entries(profile).forEach(([key, value]) => {
         if (value) {
           formData.append(key, value as string | Blob);
@@ -72,7 +86,7 @@ export default function Settings() {
       });
 
       await axios.put(
-        `http://localhost:3001/${isDoctor ? "doctor" : "user"}/profile`,
+        `http://localhost:3001/user/profile`, // Fixed URL typo
         formData,
         {
           headers: {
@@ -82,6 +96,7 @@ export default function Settings() {
           withCredentials: true,
         }
       );
+
       alert("Profile updated successfully");
       navigate("/profile");
     } catch (error) {
@@ -123,6 +138,7 @@ export default function Settings() {
           className="input"
         />
         <input type="file" onChange={handleFileChange} className="input" />
+        
         {isDoctor && (
           <>
             <input
@@ -148,6 +164,7 @@ export default function Settings() {
             />
           </>
         )}
+        
         <button
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded"
