@@ -14,7 +14,7 @@ interface LoginResponse {
     email: string;
     password: string;
     fullName: string;
-    _id: string;
+    id: string;
   };
   token: string;
   role: string;
@@ -44,7 +44,7 @@ const Login: React.FC = () => {
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("token", token);
       
-        localStorage.setItem("userId", user._id);
+        localStorage.setItem("userId", user.id);
         setTimeout(() => {
           navigate("/");
         }, 1500);
