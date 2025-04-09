@@ -10,14 +10,14 @@ interface FormData {
   gender: string;
   profilePhoto: File | null;
   password: string;
-  mobileNumber: string;
+  phone: string;
   hospital: string;
   address: string;
   medicalRegNumber: string;
   specialization: string;
   degrees: string;
   idProof: File | null;
-  role: string; 
+  role: string;
 }
 
 const Signup: React.FC = () => {
@@ -28,7 +28,7 @@ const Signup: React.FC = () => {
     gender: "",
     profilePhoto: null,
     password: "",
-    mobileNumber: "",
+    phone: "",
     hospital: "",
     address: "",
     medicalRegNumber: "",
@@ -57,7 +57,7 @@ const Signup: React.FC = () => {
     formPayload.append("email", formData.email);
     formPayload.append("gender", formData.gender);
     formPayload.append("password", formData.password);
-    formPayload.append("mobileNumber", formData.mobileNumber);
+    formPayload.append("phone", formData.phone);
     formPayload.append("hospital", formData.hospital);
     formPayload.append("address", formData.address);
     formPayload.append("medicalRegNumber", formData.medicalRegNumber);
@@ -86,6 +86,7 @@ const Signup: React.FC = () => {
       if (response.status === 201) {
         setMessage("Account created successfully!");
         setTimeout(() => navigate("/login"), 1500);
+        console.log("Response:", response.data);
       }
     } catch (error) {
       setMessage("Error signing up. Please try again.");
@@ -134,9 +135,10 @@ const Signup: React.FC = () => {
                 />
                 <input
                   type="tel"
-                  name="mobileNumber"
+                  name="phone"
                   placeholder="Mobile Number"
-                  value={formData.mobileNumber}
+                  required
+                  value={formData.phone}
                   onChange={(e) =>
                     setFormData({
                       ...formData,

@@ -24,17 +24,23 @@ const CommunityUpdates: React.FC = () => {
   useEffect(() => {
     const fetchCommunityData = async () => {
       try {
-        // Fetch recent blog posts
-        const blogResponse = await fetch("http://localhost:3001/blog/recent");
+        const blogResponse = await fetch("http://localhost:3001/blog/recent", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // or sessionStorage
+          },
+        });
         const blogData = await blogResponse.json();
-        setRecentBlogs(blogData);
+        console.log("Blog Data:", blogData); // <-- add this line
 
-        // Fetch active support groups
         const groupsResponse = await fetch(
           "http://localhost:3001/support-groups/active"
         );
         const groupsData = await groupsResponse.json();
-        setSupportGroups(groupsData);
+        console.log("Groups Data:", groupsData); // <-- add this too
+
+        // Check if data is in array format
+        setRecentBlogs(Array.isArray(blogData) ? blogData : []);
+        setSupportGroups(Array.isArray(groupsData) ? groupsData : []);
       } catch (error) {
         console.error("Error fetching community data:", error);
       } finally {
@@ -77,13 +83,13 @@ const CommunityUpdates: React.FC = () => {
                   {recentBlogs.slice(0, 2).map((blog) => (
                     <div key={blog.authorId} className="flex items-start gap-3">
                       <div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden">
-                        {blog.blogImage && (
+                        {blog.blogImage ? (
                           <img
                             src={blog.blogImage}
                             alt={blog.title}
                             className="w-full h-full object-cover"
                           />
-                        )}
+                        ) : null}
                       </div>
                       <div>
                         <p className="text-sm font-medium text-gray-800">

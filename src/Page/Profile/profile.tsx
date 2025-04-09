@@ -33,6 +33,8 @@ export default function ProfilePage() {
           }
         );
         setProfile(response.data);
+        console.log("Profile data:", response.data);
+        console.log("Phone:", response.data.phone);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }

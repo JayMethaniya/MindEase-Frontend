@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Token } from '@mui/icons-material';
 
 const QuickAccess: React.FC = () => {
   const token = localStorage.getItem("token");
