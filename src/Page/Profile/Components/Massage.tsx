@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface Message {
@@ -38,7 +37,7 @@ export default function Massage({ messages, onSelectMessage }: Props) {
                   {message.sender}
                 </h3>
                 <span className="text-sm text-gray-500">
-                  
+                  {new Date(message.timestamp).toLocaleString()}
                 </span>
               </div>
               <p className="mt-1 text-gray-700 line-clamp-2">

@@ -23,6 +23,8 @@ import Messages from './Page/Profile/Messages';
 import Profile from './Page/Profile/profile';
 import Setting from './Page/Profile/ProfileSetting';
 import ProtectedWrapper from './routes/ProtectedWrapper/index';
+import DoctorsList from "./Page/DoctorsList";
+
 
 const publicRoutes = [
   { path: "/login", element: <Login /> },
@@ -37,68 +39,6 @@ const publicRoutes = [
     ),
   },
   {
-    path: "/mood-tracking",
-    element: (
-      <DefaultLayout>
-        <MoodTracking />
-      </DefaultLayout>
-    ),
-  },
-  {
-    path: "/social/AddBlog",
-    element: (
-      <DefaultLayout>
-        <AddBlog />
-      </DefaultLayout>
-    ),
-  },
-  {
-    path: "/social/group",
-    element: (
-      <DefaultLayout>
-        <Group />
-      </DefaultLayout>
-    ),
-  },
-  {
-    path: "/social/quiz",
-    element: (
-      <DefaultLayout>
-        <Quiz />
-      </DefaultLayout>
-    ),
-  },
-  {
-    path: "/resources/blog",
-    element: (
-      <DefaultLayout>
-        <Blog />
-      </DefaultLayout>
-    ),
-  },
-  {
-    path: "/quiz/:quizId",
-    element: (
-      <DefaultLayout>
-        <QuizComponent />
-      </DefaultLayout>
-    ),
-  },
-  {
-    path: "/social/relax",
-    element: (
-      <DefaultLayout>
-        <Relax />
-      </DefaultLayout>
-    ),
-  },
-  {
-    path: "/messages",
-    element: (
-      <DefaultProfile><Messages/></DefaultProfile>
-    ),
-  },
-  {
     path: "/resources/articles",
     element: (
       <DefaultLayout>
@@ -110,7 +50,7 @@ const publicRoutes = [
     path: "/resources/initiatives",
     element: (
       <DefaultLayout>
-        <Initiatives />{" "}
+        <Initiatives />
       </DefaultLayout>
     ),
   },
@@ -118,7 +58,7 @@ const publicRoutes = [
     path: "/resources/video",
     element: (
       <DefaultLayout>
-        <VideoResources />{" "}
+        <VideoResources />
       </DefaultLayout>
     ),
   },
@@ -126,24 +66,119 @@ const publicRoutes = [
     path: "/page/contactUs",
     element: (
       <DefaultLayout>
-        <ContactUs />{" "}
+        <ContactUs />
       </DefaultLayout>
     ),
   },
-
-  {
-    path: "/setting",
-    element: (
-      <DefaultProfile>
-        <Setting />
-      </DefaultProfile>
-    ),
-  },
-  { path: "/blog/:id", element: <BlogDetail /> },
-  { path: "/challenge", element: <Challenge /> },
 ];
 
 const protectedRoutes = [
+  {
+    path: "/mood-tracking",
+    element: (
+      <ProtectedWrapper>
+        <DefaultLayout>
+          <MoodTracking />
+        </DefaultLayout>
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/social/AddBlog",
+    element: (
+      <ProtectedWrapper>
+        <DefaultLayout>
+          <AddBlog />
+        </DefaultLayout>
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/social/group",
+    element: (
+      <ProtectedWrapper>
+        <DefaultLayout>
+          <Group />
+        </DefaultLayout>
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/social/quiz",
+    element: (
+      <ProtectedWrapper>
+        <DefaultLayout>
+          <Quiz />
+        </DefaultLayout>
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/resources/blog",
+    element: (
+      <ProtectedWrapper>
+        <DefaultLayout>
+          <Blog />
+        </DefaultLayout>
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/quiz/:quizId",
+    element: (
+      <ProtectedWrapper>
+        <DefaultLayout>
+          <QuizComponent />
+        </DefaultLayout>
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/social/relax",
+    element: (
+      <ProtectedWrapper>
+        <DefaultLayout>
+          <Relax />
+        </DefaultLayout>
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/messages",
+    element: (
+      <ProtectedWrapper>
+        <DefaultProfile>
+          <Messages />
+        </DefaultProfile>
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/setting",
+    element: (
+      <ProtectedWrapper>
+        <DefaultProfile>
+          <Setting />
+        </DefaultProfile>
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/blog/:id",
+    element: (
+      <ProtectedWrapper>
+        <BlogDetail />
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/challenge",
+    element: (
+      <ProtectedWrapper>
+        <Challenge />
+      </ProtectedWrapper>
+    ),
+  },
   {
     path: "/doctor/home",
     element: (
@@ -157,10 +192,24 @@ const protectedRoutes = [
   {
     path: "/profile",
     element: (
-      <DefaultProfile><Profile/></DefaultProfile>
+      <ProtectedWrapper>
+        <DefaultProfile>
+          <Profile />
+        </DefaultProfile>
+      </ProtectedWrapper>
     ),
   },
-  
+  {
+    path: "/doctors",
+    element: (
+      <ProtectedWrapper>
+        <DefaultLayout>
+          <DoctorsList />
+        </DefaultLayout>
+      </ProtectedWrapper>
+    ),
+  },
+ 
 ];
 
 const router = createBrowserRouter([...publicRoutes, ...protectedRoutes]);

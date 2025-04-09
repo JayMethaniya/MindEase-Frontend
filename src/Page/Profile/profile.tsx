@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import logo from "../../assets/doctor_consultation_02.jpg";
 
+
 interface Profile {
   fullName: string;
   email: string;
@@ -14,17 +15,23 @@ interface Profile {
   role: string;
 }
 
-export default function ProfilePage() {
-  const [profile, setProfile] = useState<Profile | null>(null);
+export default function Profile() {
+  const [profile, setProfile] = useState<Profile>({
+    fullName: "",
+    email: "",
+    phone: "",
+    bio: "",
+    address: "",
+    role: "",
+  });
+  const [activeTab, setActiveTab] = useState("profile");
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("token");
-        if (!token) {
-          console.error("No authentication token found");
-          return;
-        }
+        if (!token) return;
+
         const response = await axios.get<Profile>(
           `http://localhost:3001/user/profile`,
           {
@@ -32,77 +39,96 @@ export default function ProfilePage() {
             withCredentials: true,
           }
         );
+
         setProfile(response.data);
-        console.log("Profile data:", response.data);
-        console.log("Phone:", response.data.phone);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
     };
+
     fetchProfile();
   }, []);
 
-  if (!profile) {
-    return <div className="text-center mt-10 text-gray-700">Loading...</div>;
-  }
+  const isDoctor = profile.role === "doctor";
 
   return (
-    <div className="flex w-full h-full flex-col items-center bg-[#FAF3E0]">
-      <div className="w-full overflow-hidden p-10">
-        {/* Profile Header */}
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-[#164734]">Profile</h2>
-        </div>
-
-        {/* Profile Overview */}
-        <div className="flex items-center bg-[#A7D7C5] p-6 rounded-lg mt-4 shadow-md">
-          <img
-            src={profile.profilePhoto || logo}
-            alt="Profile"
-            className="w-24 h-24 object-cover rounded-full border-4 border-white shadow-lg"
-          />
-          <div className="ml-4">
-            <h3 className="text-xl font-semibold text-[#164734]">
-              {profile.fullName}
-            </h3>
-            <p className="text-[#4A4A4A]">{profile.address}</p>
+    <div className="min-h-screen bg-gray-100">
+      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="p-6">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="w-32 h-32 rounded-full overflow-hidden">
+                {profile.profilePhoto ? (
+                  <img
+                    src={profile.profilePhoto}
+                    alt={profile.fullName}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <img
+                    src={logo}
+                    alt="Default Profile"
+                    className="w-full h-full object-cover"
+                  />
+                )}
+              </div>
+              <div className="text-center md:text-left">
+                <h1 className="text-2xl font-bold text-[#1E4747]">
+                  {isDoctor ? "Dr. " : ""}
+                  {profile.fullName}
+                </h1>
+                <p className="text-gray-600">{profile.bio}</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <Email className="text-[#1E4747]" />
+                  <span>{profile.email}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone className="text-[#1E4747]" />
+                  <span>{profile.phone}</span>
+                </div>
+                <p className="text-gray-600 mt-2">{profile.address}</p>
+              </div>
+            </div>
           </div>
-          <div className="ml-auto">
-            <Link to="/setting" className="p-2 bg-[#164734] text-white rounded-lg">
-              <Edit /> Edit
-            </Link>
-          </div>
-        </div>
 
-        {/* Personal Information */}
-        <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold text-[#164734] mb-4">
-            Personal Information
-          </h3>
-          <div className="grid grid-cols-2 gap-4 text-[#4A4A4A]">
-            <p>
-              <span className="font-medium text-[#164734]">Full Name:</span> {profile.fullName}
-            </p>
-            <p>
-              <Email className="mr-2 text-[#164734]" />
-              <span className="font-medium text-[#164734]">Email:</span> {profile.email}
-            </p>
-            <p>
-              <Phone className="mr-2 text-[#164734]" />
-              <span className="font-medium text-[#164734]">Phone:</span> {profile.phone}
-            </p>
-            <p>
-              <span className="font-medium text-[#164734]">Bio:</span> {profile.bio}
-            </p>
-          </div>
-        </div>
-
-        {/* Address */}
-        <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold text-[#164734] mb-4">Address</h3>
-          <p className="text-[#4A4A4A]">
-            <span className="font-medium text-[#164734]">Full Address:</span> {profile.address}
-          </p>
+          {isDoctor && (
+            <div className="border-t border-gray-200">
+              <div className="flex border-b border-gray-200">
+                <button
+                  className={`px-6 py-3 ${
+                    activeTab === "profile"
+                      ? "border-b-2 border-[#1E4747] text-[#1E4747]"
+                      : "text-gray-600"
+                  }`}
+                  onClick={() => setActiveTab("profile")}
+                >
+                  Profile
+                </button>
+                <button
+                  className={`px-6 py-3 ${
+                    activeTab === "resources"
+                      ? "border-b-2 border-[#1E4747] text-[#1E4747]"
+                      : "text-gray-600"
+                  }`}
+                  onClick={() => setActiveTab("resources")}
+                >
+                  Resources
+                </button>
+              </div>
+              <div className="p-6">
+              
+                  <div>
+                    <Link
+                      to="/profile/settings"
+                      className="inline-flex items-center gap-2 text-[#1E4747] hover:text-[#132d2d]"
+                    >
+                      <Edit /> Edit Profile
+                    </Link>
+                  </div>
+               
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

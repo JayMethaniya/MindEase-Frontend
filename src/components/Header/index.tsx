@@ -10,6 +10,7 @@ import DropdownMenu from '../DropDown/index';
 
 interface ProfileType {
   profilePhoto?: string;
+  role?: string;
 }
 
 const Header: React.FC = () => {
@@ -17,6 +18,8 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [token, setToken] = useState<string | null>();
   const [profile, setProfilePhoto] = useState("");
+  const [userRole, setUserRole] = useState<string | null>(null);
+
   useEffect(() => {
     const img = { avatar };
     const fetchProfile = async () => {
@@ -34,6 +37,7 @@ const Header: React.FC = () => {
           }
         );
         setProfilePhoto(response.data.profilePhoto || img.avatar);
+        setUserRole(response.data.role || null);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -41,7 +45,7 @@ const Header: React.FC = () => {
 
     fetchProfile();
   }, []);
-  console.log(profile);
+
   useEffect(() => {
     setToken(localStorage.getItem("token"));
     const handleScroll = () => {
@@ -101,6 +105,7 @@ const Header: React.FC = () => {
                 { name: "Initiatives", path: "/resources/initiatives" },
                 { name: "Videos", path: "/resources/video" },
                 { name: "Blog", path: "/resources/blog" },
+                ...(userRole === 'doctor' ? [{ name: "Manage Resources", path: "/doctor/resources" }] : []),
               ]}
             />
             <DropdownMenu
@@ -108,13 +113,12 @@ const Header: React.FC = () => {
               items={[
                 ...(token
                   ? [{ name: "Add Blog", path: "/page/AddBlog" }]
-                  : []), // Only add if token exists
+                  : []),
                 { name: "Contact Us", path: "/page/contactUs" },
-
                 { name: "Support Groups", path: "/page/group" },
                 { name: "Wellness Quiz", path: "/page/quiz" },
-
                 { name: "Relaxation", path: "/page/relax" },
+                { name: "Doctor", path: "/doctors" },
               ]}
             />
           </nav>
@@ -173,16 +177,18 @@ const Header: React.FC = () => {
               { name: "Initiatives", path: "/resources/initiatives" },
               { name: "Videos", path: "/resources/video" },
               { name: "Blog", path: "/resources/blog" },
+              ...(userRole === 'doctor' ? [{ name: "Manage Resources", path: "/doctor/resources" }] : []),
             ]}
           />
           <DropdownMenu
             title="Page"
             items={[
-              ...(token ? [{ name: "Add Blog", path: "/page/AddBlog" }] : []), // Only add if token exists
+              ...(token ? [{ name: "Add Blog", path: "/page/AddBlog" }] : []),
               { name: "Contact Us", path: "/page/contactUs" },
               { name: "Support Groups", path: "/page/group" },
               { name: "Wellness Quiz", path: "/page/quiz" },
               { name: "Relaxation", path: "/page/relax" },
+              { name: "Doctor", path: "/doctors" },
             ]}
           />
         </nav>

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 import ChatBox from './Components/ChatBox';
 import Massage from './Components/Massage';
 
@@ -12,41 +13,77 @@ interface Message {
 }
 
 function Messages() {
+  const [searchParams] = useSearchParams();
+  const doctorId = searchParams.get('doctorId');
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Example messages - replace with actual data from your backend
-  const messages: Message[] = [
-    {
-      id: "1",
-      sender: "Dr. Sarah Johnson",
-      content: "Hello! How are you feeling today?",
-      timestamp: new Date("2024-03-15T10:00:00"),
-      isRead: false,
-    },
-    {
-      id: "2",
-      sender: "Support Team",
-      content: "Your appointment has been confirmed for next week.",
-      timestamp: new Date("2024-03-14T15:30:00"),
-      isRead: true,
-    },
-    {
-      id: "3",
-      sender: "Therapist Mark",
-      content: "Here are some resources that might help you.",
-      timestamp: new Date("2024-03-13T09:15:00"),
-      isRead: true,
-    },
-  ];
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get<Message[]>(`http://localhost:3001/user/messages${doctorId ? `?doctorId=${doctorId}` : ''}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setMessages(response.data);
+      } catch (error) {
+        setError("Failed to fetch messages. Please try again later.");
+        console.error("Error fetching messages:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMessages();
+  }, [doctorId]);
 
   const handleSelectMessage = (message: Message) => {
     setSelectedMessage(message);
   };
 
-  const handleSendMessage = (content: string) => {
-    // Implement your message sending logic here
-    console.log("Sending message:", content);
+  const handleSendMessage = async (content: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post<Message>(
+        'http://localhost:3001/user/messages',
+        {
+          content,
+          receiverId: doctorId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Add the new message to the messages list
+      setMessages((prevMessages) => [...prevMessages, response.data]);
+      setSelectedMessage(response.data);
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#1E4747]"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="h-[calc(100vh-4rem)]">
@@ -64,7 +101,7 @@ function Messages() {
           <ChatBox
             selectedMessage={selectedMessage}
             onSendMessage={handleSendMessage}
-          />                                                                                                                                                                                                                                                                                                                                                                                                                  
+          />
         </div>
       </div>
     </div>
