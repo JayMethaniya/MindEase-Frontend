@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { goalsList, mentalHealthTips } from "./data";
+import React, { useEffect, useState } from 'react';
+
+import { goalsList, mentalHealthTips } from './data';
 
 const getTodayDate = (): string => {
   const today = new Date();
@@ -13,6 +14,7 @@ const Goals: React.FC = () => {
   useEffect(() => {
     const today = getTodayDate();
     const savedGoals = JSON.parse(localStorage.getItem("dailyGoals") || "{}");
+    const savedTip = JSON.parse(localStorage.getItem("dailyTip") || "{}");
 
     if (savedGoals.date === today) {
       setGoals(savedGoals.goals);
@@ -20,12 +22,24 @@ const Goals: React.FC = () => {
       const shuffledGoals = [...goalsList].sort(() => 0.5 - Math.random());
       const newGoals = shuffledGoals.slice(0, 3);
       setGoals(newGoals);
-      localStorage.setItem("dailyGoals", JSON.stringify({ date: today, goals: newGoals }));
+      localStorage.setItem(
+        "dailyGoals",
+        JSON.stringify({ date: today, goals: newGoals })
+      );
     }
 
-    // Select a random mental health tip
-    const randomIndex = Math.floor(Math.random() * mentalHealthTips.length);
-    setRandomTip(mentalHealthTips[randomIndex]);
+    // Handle daily tip
+    if (savedTip.date === today) {
+      setRandomTip(savedTip.tip);
+    } else {
+      const randomIndex = Math.floor(Math.random() * mentalHealthTips.length);
+      const newTip = mentalHealthTips[randomIndex];
+      setRandomTip(newTip);
+      localStorage.setItem(
+        "dailyTip",
+        JSON.stringify({ date: today, tip: newTip })
+      );
+    }
   }, []);
 
   return (
@@ -49,7 +63,9 @@ const Goals: React.FC = () => {
 
       {/* Mental Health Tip Section */}
       <div className="mt-8 bg-[#DDECE9] py-5 mx-28  rounded-xl shadow-md text-center">
-        <h3 className="text-2xl font-semibold text-[#287371]">🧘 Mental Health Tip of the Day</h3>
+        <h3 className="text-2xl font-semibold text-[#287371]">
+          🧘 Mental Health Tip of the Day
+        </h3>
         <p className="text-gray-600 text-xl mt-2">{randomTip}</p>
       </div>
     </div>

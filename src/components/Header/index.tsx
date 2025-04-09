@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
-import { Notifications, Menu, Close } from "@mui/icons-material";
-import { NavLink, Link } from "react-router-dom";
-import DropdownMenu from "../DropDown/index";
-import logo from "../../assets/logo.png";
-import avatar from "../../assets/avatar.png";
-import axios from "axios";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+
+import { Close, Menu, Notifications } from '@mui/icons-material';
+
+import avatar from '../../assets/avatar.png';
+import logo from '../../assets/logo.png';
+import DropdownMenu from '../DropDown/index';
+
 interface ProfileType {
   profilePhoto?: string;
 }
@@ -104,14 +107,14 @@ const Header: React.FC = () => {
               title="Page"
               items={[
                 ...(token
-                  ? [{ name: "Add Blog", path: "/social/AddBlog" }]
+                  ? [{ name: "Add Blog", path: "/page/AddBlog" }]
                   : []), // Only add if token exists
                 { name: "Contact Us", path: "/page/contactUs" },
 
-                { name: "Support Groups", path: "/social/group" },
-                { name: "Wellness Quiz", path: "/social/quiz" },
+                { name: "Support Groups", path: "/page/group" },
+                { name: "Wellness Quiz", path: "/page/quiz" },
 
-                { name: "Relaxation", path: "/social/relax" },
+                { name: "Relaxation", path: "/page/relax" },
               ]}
             />
           </nav>
@@ -175,11 +178,11 @@ const Header: React.FC = () => {
           <DropdownMenu
             title="Page"
             items={[
-              ...(token ? [{ name: "Add Blog", path: "/social/AddBlog" }] : []), // Only add if token exists
+              ...(token ? [{ name: "Add Blog", path: "/page/AddBlog" }] : []), // Only add if token exists
               { name: "Contact Us", path: "/page/contactUs" },
-              { name: "Support Groups", path: "/social/group" },
-              { name: "Wellness Quiz", path: "/social/quiz" },
-              { name: "Relaxation", path: "/social/relax" },
+              { name: "Support Groups", path: "/page/group" },
+              { name: "Wellness Quiz", path: "/page/quiz" },
+              { name: "Relaxation", path: "/page/relax" },
             ]}
           />
         </nav>

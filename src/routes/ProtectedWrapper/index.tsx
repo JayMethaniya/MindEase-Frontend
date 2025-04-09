@@ -11,7 +11,7 @@ const CaptainProtectedWrapper: React.FC<ProtectedWrapperProps> = ({ children }) 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      navigate('/doctor-login');
+      navigate('/login');
     }
   }, [navigate]);
 
@@ -21,12 +21,12 @@ const CaptainProtectedWrapper: React.FC<ProtectedWrapperProps> = ({ children }) 
     }
   }).then((response) => {
     if (response.status !== 200) {
-      navigate('/doctor-login');
+      navigate('/login');
     }
   }).catch((err) => {
     console.log(err);
     localStorage.removeItem('token');
-    navigate('/doctor-login');
+    navigate('/login');
   });
 
 

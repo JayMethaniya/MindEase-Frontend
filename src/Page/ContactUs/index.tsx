@@ -1,5 +1,5 @@
-import { Contact, MapIcon } from "lucide-react";
-import React from "react";
+import { Contact, MapIcon } from 'lucide-react';
+import React from 'react';
 
 const ContactSection: React.FC = () => {
   return (
@@ -58,7 +58,7 @@ const ContactSection: React.FC = () => {
                     type="text"
                     id="name"
                     placeholder="Your name"
-                    className="mb-2 w-full rounded-md border border-black py-2 px-4 shadow-sm bg-[#f9f5ef] "
+                    className="mb-2 w-full rounded-md border  border-black py-2 px-4 shadow-sm bg-[#f9f5ef] "
                     name="name"
                   />
                   <label htmlFor="email" className="pb-1 text-xs uppercase tracking-wider text-[#436a57] font-extrabold">

@@ -1,8 +1,10 @@
-import { Home, LogOut, User } from "lucide-react";
-import logo from "../../../assets/logo.png";
-import { Settings } from "@mui/icons-material";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Home, LogOut, User } from 'lucide-react';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { Chat, Settings } from '@mui/icons-material';
+
+import logo from '../../../assets/logo.png';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -45,6 +47,9 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
             </Link>
             <Link to="/setting" className="flex items-center space-x-2 bg-[#3a8585] p-3 rounded-3xl hover:bg-[#1E4747]">
               <Settings /> <span>Setting</span>
+            </Link>
+            <Link to="/messages" className="flex items-center space-x-2 bg-[#3a8585] p-3 rounded-3xl hover:bg-[#1E4747]">
+              <Chat /> <span>Message</span>
             </Link>
           </div>
         </div>

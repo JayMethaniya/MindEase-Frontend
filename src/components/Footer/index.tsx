@@ -1,5 +1,7 @@
-import { Facebook, Instagram, LinkedIn, Twitter } from '@mui/icons-material';
 import { Youtube } from 'lucide-react';
+
+import { Facebook, Instagram, LinkedIn, Twitter } from '@mui/icons-material';
+
 import logo from '../../assets/logo.png';
 
 const Footer: React.FC = () => {
@@ -30,9 +32,9 @@ const Footer: React.FC = () => {
         {/* Contact */}
         <div className="w-full md:w-1/4">
           <h3 className="text-lg font-bold text-[#1e3245] mb-2">Contact</h3>
-          <p className="text-sm flex text-[#1E3A3A] items-center gap-2">📞 +14 5464 8272</p>
-          <p className="text-sm flex text-[#1E3A3A] items-center gap-2">✉️ rona@domain.com</p>
-          <p className="text-sm flex text-[#1E3A3A] items-center gap-2">📍 Lazy Tower 192, Burn Swiss</p>
+          <p className="text-sm flex text-[#1E3A3A] items-center gap-2">📞 +91 6351415942</p>
+          <p className="text-sm flex text-[#1E3A3A] items-center gap-2">✉️ support@mindease.com</p>
+          <p className="text-sm flex text-[#1E3A3A] items-center gap-2">📍  Vishnovdevi, Ahmedabad</p>
         </div>
 
         {/* Links */}

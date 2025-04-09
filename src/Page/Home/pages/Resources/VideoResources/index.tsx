@@ -1,5 +1,6 @@
-import React from "react";
-import MentalHealthVideoData from "../../../../../components/Mental Health Video/data";
+import React from 'react';
+
+import MentalHealthVideoData from '../../../../../components/Mental Health Video/data';
 
 const MentalIllnessGrid = () => {
   return (
