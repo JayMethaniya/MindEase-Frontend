@@ -1,5 +1,5 @@
 import React from "react";
-import homeMain from "../../assets/5 - Cardiologist.png";
+import homeMain from "../../../assets/5 - Cardiologist.png";
 import { Link } from "react-router-dom";
 
 export default function HomeMain() {

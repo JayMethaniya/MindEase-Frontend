@@ -15,6 +15,7 @@ interface LoginResponse {
     password: string;
     fullName: string;
     id: string;
+    role: string;
   };
   token: string;
   role: string;
@@ -41,9 +42,8 @@ const Login: React.FC = () => {
       if (response.status === 200) {
         const { user, token } = response.data;
         setMessage("Login successful!");
-        localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("token", token);
-      
+      localStorage.setItem("role", user.role);
         localStorage.setItem("userId", user.id);
         setTimeout(() => {
           navigate("/");

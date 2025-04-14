@@ -23,7 +23,8 @@ import Messages from './Page/Profile/Messages';
 import Profile from './Page/Profile/profile';
 import Setting from './Page/Profile/ProfileSetting';
 import ProtectedWrapper from './routes/ProtectedWrapper/index';
-import DoctorsList from "./Page/DoctorsList";
+import DoctorsList from "./Page/Home/pages/DoctorsList";
+import Resource from './Page/Profile/Components/Resource';
 
 
 const publicRoutes = [
@@ -159,6 +160,16 @@ const protectedRoutes = [
       <ProtectedWrapper>
         <DefaultProfile>
           <Setting />
+        </DefaultProfile>
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/resource",
+    element: (
+      <ProtectedWrapper>
+        <DefaultProfile>
+          <Resource />
         </DefaultProfile>
       </ProtectedWrapper>
     ),

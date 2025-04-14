@@ -1,5 +1,5 @@
 import React from "react";
-import CTA from "../../assets/Frame 80.png";
+import CTA from "../../../assets/Frame 80.png";
 import { Link } from "react-router-dom";
 
 const Challenges: React.FC = () => {
