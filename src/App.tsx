@@ -26,6 +26,7 @@ import Setting from './Page/Profile/ProfileSetting';
 import ProtectedWrapper from './routes/ProtectedWrapper/index';
 import DoctorsList from "./Page/Home/pages/DoctorsList";
 import Resource from './Page/Profile/Components/Resource';
+import JournalPage from './Page/Home/components/JournalPage';
 
 
 const publicRoutes = [
@@ -91,6 +92,16 @@ const protectedRoutes = [
       <ProtectedWrapper>
         <DefaultLayout>
           <Meditation />
+        </DefaultLayout>
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/journal-entry",
+    element: (
+      <ProtectedWrapper>
+        <DefaultLayout>
+          <JournalPage />
         </DefaultLayout>
       </ProtectedWrapper>
     ),
