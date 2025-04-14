@@ -8,6 +8,7 @@ import Signup from './Page/Auth/Signup/index';
 import ContactUs from './Page/ContactUs/index';
 import Home from './Page/Home/index';
 import MoodTracking from './Page/Home/pages/MoodTracking/index';
+import Meditation from './Page/Home/components/Meditation';
 import Articles from './Page/Home/pages/Resources/Articles/Articles';
 import Initiatives from './Page/Home/pages/Resources/initiatives/Initiatives';
 import VideoResources from './Page/Home/pages/Resources/VideoResources/index';
@@ -80,6 +81,16 @@ const protectedRoutes = [
       <ProtectedWrapper>
         <DefaultLayout>
           <MoodTracking />
+        </DefaultLayout>
+      </ProtectedWrapper>
+    ),
+  },
+  {
+    path: "/meditation",
+    element: (
+      <ProtectedWrapper>
+        <DefaultLayout>
+          <Meditation />
         </DefaultLayout>
       </ProtectedWrapper>
     ),
