@@ -60,11 +60,10 @@ export default function MoodSummary() {
         const data = await response.json();
 
         if (Array.isArray(data)) {
-          setMoodHistory(
-            data.sort(
-              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-            )
+          const sortedData = data.sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           );
+          setMoodHistory(sortedData.slice(0, 3));
         } else {
           throw new Error('Invalid data format received.');
         }
@@ -80,13 +79,7 @@ export default function MoodSummary() {
   }, [token]);
 
   const getRecentThreeDaysMoods = () => {
-    const today = new Date();
-    return moodHistory.filter((entry) => {
-      const entryDate = new Date(entry.date);
-      const diffInDays =
-        (today.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24);
-      return diffInDays <= 2;
-    });
+    return moodHistory;
   };
 
   const getMoodInsight = () => {
@@ -108,7 +101,6 @@ export default function MoodSummary() {
   };
 
   const chartData: MoodValue[] = moodHistory
-    .slice(0, 7)
     .map((entry) => ({
       date: new Date(entry.date).toLocaleDateString(),
       moodValue: moodScale[entry.mood] ?? 0,
