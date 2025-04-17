@@ -97,7 +97,7 @@ const Conversation: React.FC<Props> = ({ data, currentUser, online }) => {
           className="w-12 h-12 rounded-full object-cover"
         />
       </div>
-      <div className="flex flex-col text-sm">
+      <div className="flex flex-col  text-sm md:hidden lg:flex ">
         <span className="font-medium text-gray-800">
           {userData?.fullName}
         </span>

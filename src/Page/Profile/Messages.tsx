@@ -115,10 +115,10 @@ const Messages = () => {
           <DefaultLayout>
             <div className="w-full p-4 bg-white rounded-lg shadow-md">
               <h1 className="text-xl font-bold mb-3">Messages</h1>
-              <div className="text-gray-600 h-[300px] w-full rounded-lg p-2 overflow-y-auto">
+              <div className="text-gray-600 h-[80vh] w-full rounded-lg p-2 overflow-y-auto">
                 {conversations.length > 0 ? (
                   conversations.map((chat) => (
-                    <div
+                    <div 
                       onClick={() => setCurrentChat(chat)}
                       key={chat._id}
                       className="cursor-pointer"

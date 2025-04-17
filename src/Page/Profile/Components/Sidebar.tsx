@@ -36,19 +36,17 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
       )}
 
       <aside
-        className={`fixed md:relative top-0 left-0 h-full w-64 bg-[#A7D7C5] text-white p-5 flex flex-col justify-between transition-transform duration-300 z-50
-        ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 `}
+        className={`fixed md:sticky top-0 left-0 h-screen w-64 bg-[#A7D7C5] text-white flex flex-col transition-transform duration-300 z-50
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
       >
-        <div className="flex flex-col space-y-2">
-          <div className="flex items-center justify-center">
+        <div className="flex flex-col flex-1 p-5">
+          <div className="flex items-center justify-center mb-8">
             <img src={logo} alt="logo" className="w-44" />
           </div>
-          <div className="mt-5 space-y-4">
+          <div className="flex flex-col space-y-4">
             <Link
               to="/"
-              className="flex bg-[#3a8585] p-3 rounded-3xl hover:bg-[#1E4747]  items-center space-x-2"
+              className="flex bg-[#3a8585] p-3 rounded-3xl hover:bg-[#1E4747] items-center space-x-2"
             >
               <Home /> <span>Home</span>
             </Link>
@@ -80,7 +78,7 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
             )}
           </div>
         </div>
-        <div className="w-full">
+        <div className="p-5">
           <button
             onClick={handleLogout}
             className="flex w-full items-center space-x-2 bg-[#3a8585] p-3 rounded-3xl hover:bg-[#1E4747]"

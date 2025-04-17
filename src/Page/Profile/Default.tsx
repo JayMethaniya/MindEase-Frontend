@@ -6,26 +6,22 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen w-full">
-      <div className="flex min-h-screen">
-        {/* Sidebar - Always visible on desktop, toggles on mobile */}
-        <Sidebar
-          sidebarOpen={sidebarOpen}
-          toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-        />
+    <div className="flex h-screen overflow-hidden bg-[#F1E8DD]">
+      {/* Sidebar */}
+      <Sidebar
+        sidebarOpen={sidebarOpen}
+        toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+      />
 
-        {/* Content Area */}
-        <div className="relative flex flex-1 flex-col">
-          {/* Header */}
-          <Header toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+      {/* Content Area */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden">
+        {/* Header */}
+        <Header toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
-          {/* Main Content */}
-          <main className="flex-1 flex flex-col">
-            <div className="flex-1">
-              {children}
-            </div>
-          </main>
-        </div>
+        {/* Main Content */}
+        <main className="flex-1 overflow-auto">
+          {children}
+        </main>
       </div>
     </div>
   );
