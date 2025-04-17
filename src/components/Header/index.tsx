@@ -19,7 +19,7 @@ const Header: React.FC = () => {
   const [token, setToken] = useState<string | null>();
   const [profile, setProfilePhoto] = useState("");
   const [userRole, setUserRole] = useState<string | null>(null);
-
+const userId = localStorage.getItem("userId");
   useEffect(() => {
     const img = { avatar };
     const fetchProfile = async () => {
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
           return;
         }
         const response = await axios.get<ProfileType>(
-          `http://localhost:3001/user/profile`,
+          `http://localhost:3001/user/profile/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
@@ -128,7 +128,7 @@ const Header: React.FC = () => {
                 <button className="p-2 rounded-full h-10 w-10 flex items-center justify-center">
                   <Notifications className="text-[#1E4747]" fontSize="large" />
                 </button>
-                <Link to="/profile" className="flex items-center gap-2">
+                <Link to="/profile" className="flex items-center gap-2 border-2 rounded-full border-[#1E4747]">
                   <img
                     src={profile}
                     alt="Profile"

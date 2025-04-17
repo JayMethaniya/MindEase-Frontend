@@ -14,14 +14,14 @@ const ProtectedWrapper: React.FC<ProtectedWrapperProps> = ({ children }) => {
   useEffect(() => {
     const verifyAuth = async () => {
       const token = localStorage.getItem('token');
-      
+      const userId = localStorage.getItem('userId');
       if (!token) {
         navigate('/login');
         return;
       }
 
       try {
-        const response = await axios.get('http://localhost:3001/user/profile', {
+        const response = await axios.get(`http://localhost:3001/user/profile/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

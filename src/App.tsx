@@ -1,33 +1,32 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Challenge from './components/7dayChallenge/index';
-import DefaultLayout from './Layout/Default';
-import DoctorSignup from './Page/Auth/DoctorSignup/index';
-import Login from './Page/Auth/Login/index';
-import Signup from './Page/Auth/Signup/index';
-import ContactUs from './Page/ContactUs/index';
-import Home from './Page/Home/index';
-import MoodTracking from './Page/Home/pages/MoodTracking/index';
-import Meditation from './Page/Home/components/Meditation';
-import Articles from './Page/Home/pages/Resources/Articles/Articles';
-import Initiatives from './Page/Home/pages/Resources/initiatives/Initiatives';
-import VideoResources from './Page/Home/pages/Resources/VideoResources/index';
-import AddBlog from './Page/Home/pages/Social/AddBlog/index';
-import BlogDetail from './Page/Home/pages/Social/Blogs/BlogDetails';
-import Blog from './Page/Home/pages/Social/Blogs/index';
-import Group from './Page/Home/pages/Social/Groups/SupportGroupsMain';
-import Quiz from './Page/Home/pages/Social/Quiz';
-import QuizComponent from './Page/Home/pages/Social/Quiz/QuizComponent';
-import Relax from './Page/Home/pages/Social/Relax/index';
-import DefaultProfile from './Page/Profile/Default';
-import Messages from './Page/Profile/Messages';
-import Profile from './Page/Profile/profile';
-import Setting from './Page/Profile/ProfileSetting';
-import ProtectedWrapper from './routes/ProtectedWrapper/index';
+import Challenge from "./components/7dayChallenge/index";
+import DefaultLayout from "./Layout/Default";
+import DoctorSignup from "./Page/Auth/DoctorSignup/index";
+import Login from "./Page/Auth/Login/index";
+import Signup from "./Page/Auth/Signup/index";
+import ContactUs from "./Page/ContactUs/index";
+import Home from "./Page/Home/index";
+import MoodTracking from "./Page/Home/pages/MoodTracking/index";
+import Meditation from "./Page/Home/components/Meditation";
+import Articles from "./Page/Home/pages/Resources/Articles/Articles";
+import Initiatives from "./Page/Home/pages/Resources/initiatives/Initiatives";
+import VideoResources from "./Page/Home/pages/Resources/VideoResources/index";
+import AddBlog from "./Page/Home/pages/Social/AddBlog/index";
+import BlogDetail from "./Page/Home/pages/Social/Blogs/BlogDetails";
+import Blog from "./Page/Home/pages/Social/Blogs/index";
+import Group from "./Page/Home/pages/Social/Groups/SupportGroupsMain";
+import Quiz from "./Page/Home/pages/Social/Quiz";
+import QuizComponent from "./Page/Home/pages/Social/Quiz/QuizComponent";
+import Relax from "./Page/Home/pages/Social/Relax/index";
+import DefaultProfile from "./Page/Profile/Default";
+import Messages from "./Page/Profile/Messages";
+import Profile from "./Page/Profile/profile";
+import Setting from "./Page/Profile/ProfileSetting";
+import ProtectedWrapper from "./routes/ProtectedWrapper/index";
 import DoctorsList from "./Page/Home/pages/DoctorsList";
-import Resource from './Page/Profile/Components/Resource';
-import JournalPage from './Page/Home/components/JournalPage';
-
+import Resource from "./Page/Profile/Components/Resource";
+import JournalPage from "./Page/Home/components/JournalPage";
 
 const publicRoutes = [
   { path: "/login", element: <Login /> },
@@ -107,7 +106,7 @@ const protectedRoutes = [
     ),
   },
   {
-    path: "/social/AddBlog",
+    path: "/page/AddBlog",
     element: (
       <ProtectedWrapper>
         <DefaultLayout>
@@ -170,9 +169,7 @@ const protectedRoutes = [
     path: "/messages",
     element: (
       <ProtectedWrapper>
-        <DefaultProfile>
-          <Messages />
-        </DefaultProfile>
+        <Messages />
       </ProtectedWrapper>
     ),
   },
@@ -242,7 +239,6 @@ const protectedRoutes = [
       </ProtectedWrapper>
     ),
   },
- 
 ];
 
 const router = createBrowserRouter([...publicRoutes, ...protectedRoutes]);

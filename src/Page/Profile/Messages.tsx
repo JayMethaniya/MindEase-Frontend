@@ -1,111 +1,197 @@
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import axios from 'axios';
-import ChatBox from './Components/ChatBox';
-import Massage from './Components/Massage';
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { io, Socket } from "socket.io-client";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import Conversation from "./Components/Conversation";
+import ChatBox from "./Components/ChatBox";
+import DefaultLayout from "./Default";
 
-interface Message {
-  id: string;
-  sender: string;
-  content: string;
-  timestamp: Date;
-  isRead: boolean;
+interface ConversationData {
+  members: string[];
+  _id: string;
 }
 
-function Messages() {
-  const [searchParams] = useSearchParams();
-  const doctorId = searchParams.get('doctorId');
-  const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface MessageData {
+  senderId: string;
+  receiverId: string;
+  text: string;
+  chatId: string;
+  createdAt?: string;
+}
 
+interface OnlineUser {
+  userId: string;
+  socketId: string;
+}
+
+const Messages = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [conversations, setConversations] = useState<ConversationData[]>([]);
+  const [currentChat, setCurrentChat] = useState<ConversationData | null>(null);
+  const [onlineUsers, setOnlineUsers] = useState<OnlineUser[]>([]);
+  const [sendMessage, setSendMessage] = useState<MessageData | null>(null);
+  const [receivedMessage, setReceivedMessage] = useState<MessageData | null>(
+    null
+  );
+  const socket = useRef<Socket | null>(null);
+
+  const userId = localStorage.getItem("userId");
+  const chatId = searchParams.get("chatId");
+
+  // Handle sending message via socket
   useEffect(() => {
-    const fetchMessages = async () => {
+    if (sendMessage && socket.current) {
+      socket.current.emit("sendMessage", sendMessage);
+    }
+  }, [sendMessage]);
+
+  // Setup socket connection
+  useEffect(() => {
+    if (!userId) return;
+
+    socket.current = io("http://localhost:3002");
+    socket.current.emit("newUser", userId);
+
+    socket.current.on("getUsers", (users: OnlineUser[]) => {
+      setOnlineUsers(users);
+    });
+
+    return () => {
+      socket.current?.disconnect();
+    };
+  }, [userId]);
+
+  // Receive message via socket
+  useEffect(() => {
+    if (!socket.current) return;
+    socket.current.on("getMessage", (data: MessageData) => {
+      setReceivedMessage(data);
+    });
+  }, []);
+
+  // Fetch user conversations and set current chat if chatId is present
+  useEffect(() => {
+    const fetchConversations = async () => {
+      if (!userId) return;
+
       try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get<Message[]>(`http://localhost:3001/user/messages${doctorId ? `?doctorId=${doctorId}` : ''}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setMessages(response.data);
+        const response = await axios.get<ConversationData[]>(
+          `http://localhost:3001/chat/${userId}`
+        );
+        setConversations(response.data);
+
+        // If chatId is present in URL, find and set the corresponding chat
+        if (chatId) {
+          const chat = response.data.find((conv) => conv._id === chatId);
+          if (chat) {
+            setCurrentChat(chat);
+          }
+        }
       } catch (error) {
-        setError("Failed to fetch messages. Please try again later.");
-        console.error("Error fetching messages:", error);
-      } finally {
-        setLoading(false);
+        console.error("Error fetching conversations:", error);
       }
     };
 
-    fetchMessages();
-  }, [doctorId]);
+    fetchConversations();
+  }, [userId, chatId]);
 
-  const handleSelectMessage = (message: Message) => {
-    setSelectedMessage(message);
+  // Check if a chat member is online
+  const checkOnline = (chat: ConversationData): boolean => {
+    const chatMember = chat.members.find((member) => member !== userId);
+    return onlineUsers.some((user) => user.userId === chatMember);
   };
 
-  const handleSendMessage = async (content: string) => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post<Message>(
-        'http://localhost:3001/user/messages',
-        {
-          content,
-          receiverId: doctorId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      // Add the new message to the messages list
-      setMessages((prevMessages) => [...prevMessages, response.data]);
-      setSelectedMessage(response.data);
-    } catch (error) {
-      console.error("Error sending message:", error);
-    }
+  const handleBack = () => {
+    setCurrentChat(null);
+    navigate("/messages");
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#1E4747]"></div>
+  const content = (
+    <div className="flex flex-col md:flex-row w-full h-full overflow-hidden">
+      {/* Mobile Conversations List with DefaultLayout */}
+      <div className="md:hidden">
+        {!currentChat && (
+          <DefaultLayout>
+            <div className="w-full p-4 bg-white rounded-lg shadow-md">
+              <h1 className="text-xl font-bold mb-3">Messages</h1>
+              <div className="text-gray-600 h-[300px] w-full rounded-lg p-2 overflow-y-auto">
+                {conversations.length > 0 ? (
+                  conversations.map((chat) => (
+                    <div
+                      onClick={() => setCurrentChat(chat)}
+                      key={chat._id}
+                      className="cursor-pointer"
+                    >
+                      <Conversation
+                        data={chat}
+                        currentUser={userId!}
+                        online={checkOnline(chat)}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <p>No conversations yet.</p>
+                )}
+              </div>
+            </div>
+          </DefaultLayout>
+        )}
       </div>
-    );
-  }
 
-  if (error) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-red-500">{error}</p>
+      {/* Desktop Conversations List */}
+      <div
+        className={`hidden md:block w-1/3 p-4 bg-white rounded-lg shadow-md ${
+          currentChat ? "hidden md:block" : "block"
+        }`}
+      >
+        <h1 className="text-2xl font-bold mb-3">Messages</h1>
+        <div className="text-gray-600 h-full w-full rounded-lg p-2 overflow-y-auto">
+          {conversations.length > 0 ? (
+            conversations.map((chat) => (
+              <div
+                onClick={() => setCurrentChat(chat)}
+                key={chat._id}
+                className="cursor-pointer"
+              >
+                <Conversation
+                  data={chat}
+                  currentUser={userId!}
+                  online={checkOnline(chat)}
+                />
+              </div>
+            ))
+          ) : (
+            <p>No conversations yet.</p>
+          )}
+        </div>
       </div>
-    );
-  }
 
-  return (
-    <div className="h-[calc(100vh-4rem)]">
-      <div className="flex h-full">
-        {/* Messages List */}
-        <div className="w-1/3 border-r">
-          <div className="p-4 border-b">
-            <h1 className="text-2xl font-bold text-[#287371]">Messages</h1>
-          </div>
-          <Massage messages={messages} onSelectMessage={handleSelectMessage} />
-        </div>
-
-        {/* Chat Area */}
-        <div className="w-2/3">
-          <ChatBox
-            selectedMessage={selectedMessage}
-            onSendMessage={handleSendMessage}
-          />
-        </div>
+      {/* Chat Box */}
+      <div
+        className={`w-full p-4 bg-white rounded-lg shadow-md ${
+          currentChat ? "block" : "hidden md:block"
+        }`}
+      >
+        <ChatBox
+          chat={currentChat}
+          currentUser={userId || ""}
+          setSendMessage={setSendMessage}
+          receivedMessage={receivedMessage}
+          onBack={handleBack}
+        />
       </div>
     </div>
   );
-}
+
+  return (
+    <>
+      <div className="md:hidden overflow-hidden">{content}</div>
+      <div className="hidden md:block">
+        <DefaultLayout>{content}</DefaultLayout>
+      </div>
+    </>
+  );
+};
 
 export default Messages;

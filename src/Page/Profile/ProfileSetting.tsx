@@ -30,7 +30,7 @@ export default function Settings() {
   const navigate = useNavigate();
   const UserRole = localStorage.getItem("role");
   const isDoctor = UserRole === "doctor";
-
+const userId = localStorage.getItem("userId");
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -38,7 +38,7 @@ export default function Settings() {
         if (!token) return;
 
         const response = await axios.get<Profile>(
-          `http://localhost:3001/user/profile`,
+          `http://localhost:3001/user/profile/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
@@ -92,7 +92,7 @@ export default function Settings() {
         }
       });
 
-      await axios.put(`http://localhost:3001/user/profile`, formData, {
+      await axios.put(`http://localhost:3001/user/profile/${userId}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

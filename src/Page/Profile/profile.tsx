@@ -1,7 +1,6 @@
 import { Email, Phone } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 interface Profile {
@@ -21,6 +20,7 @@ interface Profile {
 }
 
 export default function Profile() {
+  const userId = localStorage.getItem("userId");
   const [profile, setProfile] = useState<Profile>({
     fullName: "",
     email: "",
@@ -29,7 +29,6 @@ export default function Profile() {
     address: "",
     role: "",
   });
-const navigate = useNavigate();
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -37,7 +36,7 @@ const navigate = useNavigate();
         if (!token) return;
 
         const response = await axios.get<Profile>(
-          `http://localhost:3001/user/profile`,
+          `http://localhost:3001/user/profile/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,

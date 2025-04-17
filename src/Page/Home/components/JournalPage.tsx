@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { FiSave, FiCalendar, FiSun, FiMoon, FiMeh, FiFrown, FiSmile } from 'react-icons/fi';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import NightsStayIcon from '@mui/icons-material/NightsStay';
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
+import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import SaveIcon from '@mui/icons-material/Save';
 
 type MoodType = 'happy' | 'neutral' | 'sad';
 type JournalEntry = {
@@ -58,7 +64,7 @@ const JournalPage = () => {
               <div className="p-6 md:p-8">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center text-gray-600">
-                    <FiCalendar className="mr-2" />
+                    <CalendarMonthIcon sx={{ mr: 1 }} />
                     <span>
                       {new Date().toLocaleDateString('en-US', {
                         weekday: 'long',
@@ -73,12 +79,12 @@ const JournalPage = () => {
                   >
                     {isDaytime ? (
                       <>
-                        <FiSun className="mr-2" />
+                        <WbSunnyIcon sx={{ mr: 1 }} />
                         <span>Day</span>
                       </>
                     ) : (
                       <>
-                        <FiMoon className="mr-2" />
+                        <NightsStayIcon sx={{ mr: 1 }} />
                         <span>Night</span>
                       </>
                     )}
@@ -119,7 +125,7 @@ const JournalPage = () => {
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         }`}
                       >
-                        <FiSmile className="mr-2" />
+                        <SentimentSatisfiedIcon sx={{ mr: 1 }} />
                         Happy
                       </button>
                       <button
@@ -131,7 +137,7 @@ const JournalPage = () => {
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         }`}
                       >
-                        <FiMeh className="mr-2" />
+                        <SentimentNeutralIcon sx={{ mr: 1 }} />
                         Neutral
                       </button>
                       <button
@@ -143,7 +149,7 @@ const JournalPage = () => {
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         }`}
                       >
-                        <FiFrown className="mr-2" />
+                        <SentimentDissatisfiedIcon sx={{ mr: 1 }} />
                         Sad
                       </button>
                     </div>
@@ -152,7 +158,7 @@ const JournalPage = () => {
                       type="submit"
                       className="flex items-center px-6 py-3 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white font-medium rounded-lg transition-all transform hover:scale-105 shadow-lg"
                     >
-                      <FiSave className="mr-2" />
+                      <SaveIcon sx={{ mr: 1 }} />
                       Save Entry
                     </button>
                   </div>
@@ -189,19 +195,19 @@ const JournalPage = () => {
                         <div className="flex items-center text-sm text-gray-500">
                           {entry.mood === 'happy' && (
                             <>
-                              <FiSmile className="mr-1 text-teal-500" />
+                              <SentimentSatisfiedIcon sx={{ mr: 0.5, color: 'teal.500' }} />
                               <span>Happy</span>
                             </>
                           )}
                           {entry.mood === 'neutral' && (
                             <>
-                              <FiMeh className="mr-1 text-yellow-500" />
+                              <SentimentNeutralIcon sx={{ mr: 0.5, color: 'yellow.500' }} />
                               <span>Neutral</span>
                             </>
                           )}
                           {entry.mood === 'sad' && (
                             <>
-                              <FiFrown className="mr-1 text-blue-500" />
+                              <SentimentDissatisfiedIcon sx={{ mr: 0.5, color: 'blue.500' }} />
                               <span>Sad</span>
                             </>
                           )}

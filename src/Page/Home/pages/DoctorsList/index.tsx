@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Doctor } from "../../../../types/doctor";
 
+interface ChatResponse {
+  _id: string;
+  members: string[];
+}
+
 const DoctorsList: React.FC = () => {
   const navigate = useNavigate();
   const [doctors, setDoctors] = useState<Doctor[]>([]);
@@ -53,21 +58,53 @@ const DoctorsList: React.FC = () => {
     return () => clearTimeout(timer);
   }, [searchTerm, specialization]);
 
-  const handleMessageClick =
-    (doctorId: string) => (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          setError("Please login to message");
-          return;
-        }
-        navigate(`/messages?doctorId=${doctorId}`);
-      } catch (error) {
-        setError("Failed to navigate to messages. Please try again.");
-        console.error("Error navigating to messages:", error);
+  const handleMessageClick = async (doctorId: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("Please login to message");
+        return;
       }
-    };
+
+      // First check if a chat already exists
+      const existingChats = await axios.get<ChatResponse[]>(
+        `http://localhost:3001/chat/${localStorage.getItem("userId")}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Find existing chat with this doctor
+      const existingChat = existingChats.data.find(chat => 
+        chat.members.includes(doctorId)
+      );
+
+      if (existingChat) {
+        // If chat exists, navigate to it
+        navigate(`/messages?chatId=${existingChat._id}`);
+      } else {
+        // Create a new chat if none exists
+        const response = await axios.post<ChatResponse>(
+          "http://localhost:3001/chat",
+          {
+            senderId: localStorage.getItem("userId"),
+            receiverId: doctorId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        navigate(`/messages?chatId=${response.data._id}`);
+      }
+    } catch (error) {
+      console.error("Error handling chat:", error);
+      setError("Failed to start chat. Please try again.");
+    }
+  };
 
   if (loading) {
     return (
@@ -274,7 +311,7 @@ const DoctorsList: React.FC = () => {
                   </div>
 
                   <button
-                    onClick={handleMessageClick(doctor._id)}
+                    onClick={() => handleMessageClick(doctor._id)}
                     className="w-full mt-4 bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition"
                   >
                     <svg

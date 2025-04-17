@@ -30,7 +30,7 @@ export default function Index() {
     else setGreeting("🌙 Good Evening! ");
 
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
-
+const userId = localStorage.getItem("userId");
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -39,7 +39,7 @@ export default function Index() {
           return;
         }
         const response = await axios.get<ProfileType>(
-          `http://localhost:3001/user/profile`,
+          `http://localhost:3001/user/profile/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,

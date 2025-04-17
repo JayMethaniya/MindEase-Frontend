@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@mui/icons-material": "^6.4.6",
-    "@mui/material": "^6.4.6",
+    "@mui/icons-material": "^5.15.10",
+    "@mui/material": "^5.15.10",
     "@reduxjs/toolkit": "^2.6.1",
     "@shadcn/ui": "^0.0.4",
     "@types/react-icons": "^2.2.7",
@@ -20,12 +20,13 @@
     "jsvectormap": "^1.6.0",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.477.0",
-    "react": "^19.0.0",
+    "react": "^18.2.0",
     "react-apexcharts": "^1.7.0",
     "react-chartjs-2": "^5.3.0",
-    "react-dom": "^19.0.0",
+    "react-dom": "^18.2.0",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
+    "react-input-emoji": "^5.9.0",
     "react-redux": "^9.2.0",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^7.2.0",
@@ -33,13 +34,18 @@
     "react-slick": "^0.30.3",
     "recharts": "^2.15.1",
     "slick-carousel": "^1.8.1",
-    "tailwind": "^4.0.0"
+    "socket.io-client": "^4.8.1",
+    "tailwind": "^4.0.0",
+    "timeago.js": "^4.0.2",
+    "socket.io": "^4.7.4",
+    "express": "^4.18.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "socket": "node server/socket.js"
   },
   "eslintConfig": {
     "extends": [
@@ -63,9 +69,9 @@
     "@types/axios": "^0.9.36",
     "@types/date-fns": "^2.6.3",
     "@types/flatpickr": "^3.0.2",
-    "@types/react": "^19.0.10",
+    "@types/react": "^18.2.55",
     "@types/react-chartjs-2": "^2.0.2",
-    "@types/react-dom": "^19.0.4",
+    "@types/react-dom": "^18.2.19",
     "@types/react-slick": "^0.23.13",
     "@types/recharts": "^1.8.29"
   }
