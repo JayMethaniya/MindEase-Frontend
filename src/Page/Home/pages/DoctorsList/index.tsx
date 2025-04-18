@@ -75,7 +75,7 @@ const DoctorsList: React.FC = () => {
         }
       );
 
-      const existingChat = existingChats.data.find(chat => 
+      const existingChat = existingChats.data.find((chat) =>
         chat.members.includes(doctorId)
       );
 
@@ -302,7 +302,10 @@ const DoctorsList: React.FC = () => {
                           d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                         />
                       </svg>
-                      <span className="line-clamp-2">{doctor.address}</span>
+                      <span className="line-clamp-2">
+                        {doctor.area} , {doctor.street}, {doctor.city}
+                        {doctor.state} - {doctor.pincode}
+                      </span>
                     </div>
                   </div>
 

@@ -1,12 +1,12 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
-import { Close, Menu, Notifications } from '@mui/icons-material';
+import { Close, Menu, Notifications } from "@mui/icons-material";
 
-import avatar from '../../assets/avatar.png';
-import logo from '../../assets/logo.png';
-import DropdownMenu from '../DropDown/index';
+import avatar from "../../assets/avatar.png";
+import logo from "../../assets/logo.png";
+import DropdownMenu from "../DropDown/index";
 
 interface ProfileType {
   profilePhoto?: string;
@@ -19,7 +19,7 @@ const Header: React.FC = () => {
   const [token, setToken] = useState<string | null>();
   const [profile, setProfilePhoto] = useState("");
   const [userRole, setUserRole] = useState<string | null>(null);
-const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId");
   useEffect(() => {
     const img = { avatar };
     const fetchProfile = async () => {
@@ -105,20 +105,19 @@ const userId = localStorage.getItem("userId");
                 { name: "Initiatives", path: "/resources/initiatives" },
                 { name: "Videos", path: "/resources/video" },
                 { name: "Blog", path: "/resources/blog" },
-                ...(userRole === 'doctor' ? [{ name: "Manage Resources", path: "/doctor/resources" }] : []),
+                ...(userRole === "doctor"
+                  ? [{ name: "Manage Resources", path: "/doctor/resources" }]
+                  : []),
               ]}
             />
             <DropdownMenu
               title="Page"
               items={[
-                ...(token
-                  ? [{ name: "Add Blog", path: "/page/AddBlog" }]
-                  : []),
-                { name: "Contact Us", path: "/page/contactUs" },
-                { name: "Support Groups", path: "/page/group" },
+                ...(token ? [{ name: "Add Blog", path: "/page/AddBlog" }] : []),
+                { name: "Doctor", path: "/doctors" },
                 { name: "Wellness Quiz", path: "/page/quiz" },
                 { name: "Relaxation", path: "/page/relax" },
-                { name: "Doctor", path: "/doctors" },
+                { name: "Contact Us", path: "/page/contactUs" },
               ]}
             />
           </nav>
@@ -128,7 +127,10 @@ const userId = localStorage.getItem("userId");
                 <button className="p-2 rounded-full h-10 w-10 flex items-center justify-center">
                   <Notifications className="text-[#1E4747]" fontSize="large" />
                 </button>
-                <Link to="/profile" className="flex items-center gap-2 border-2 rounded-full border-[#1E4747]">
+                <Link
+                  to="/profile"
+                  className="flex items-center gap-2 border-2 rounded-full border-[#1E4747]"
+                >
                   <img
                     src={profile}
                     alt="Profile"
@@ -177,18 +179,19 @@ const userId = localStorage.getItem("userId");
               { name: "Initiatives", path: "/resources/initiatives" },
               { name: "Videos", path: "/resources/video" },
               { name: "Blog", path: "/resources/blog" },
-              ...(userRole === 'doctor' ? [{ name: "Manage Resources", path: "/doctor/resources" }] : []),
+              ...(userRole === "doctor"
+                ? [{ name: "Manage Resources", path: "/doctor/resources" }]
+                : []),
             ]}
           />
           <DropdownMenu
             title="Page"
             items={[
               ...(token ? [{ name: "Add Blog", path: "/page/AddBlog" }] : []),
-              { name: "Contact Us", path: "/page/contactUs" },
-              { name: "Support Groups", path: "/page/group" },
+              { name: "Doctor", path: "/doctors" },
               { name: "Wellness Quiz", path: "/page/quiz" },
               { name: "Relaxation", path: "/page/relax" },
-              { name: "Doctor", path: "/doctors" },
+              { name: "Contact Us", path: "/page/contactUs" },
             ]}
           />
         </nav>

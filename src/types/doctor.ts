@@ -8,7 +8,11 @@ export interface Doctor {
   hospital: string;
   medicalRegNumber: string;
   degrees: string[];
-  address: string;
+  street: string;
+  area: string;
+  city: string;
+  state: string;
+  pincode: string;
   gender: string;
   profilePhoto?: string;
 } 

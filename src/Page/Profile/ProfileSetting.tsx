@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 type Profile = {
   fullName: string;
   email: string;
-  mobileNumber: string;
+  phone: string;
   street: string;
   area: string;
   city: string;
@@ -22,7 +22,7 @@ export default function Settings() {
   const [profile, setProfile] = useState<Profile>({
     fullName: "",
     email: "",
-    mobileNumber: "",
+    phone: "",
     street: "",
     area: "",
     city: "",
@@ -56,7 +56,7 @@ const userId = localStorage.getItem("userId");
         setProfile((prev) => ({
           fullName: response.data.fullName || "",
           email: response.data.email || "",
-          mobileNumber: response.data.mobileNumber || "",
+          phone: response.data.phone || "",
           street: response.data.street || "",
           area: response.data.area || "",
           city: response.data.city || "",
@@ -200,13 +200,13 @@ const userId = localStorage.getItem("userId");
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Mobile Number
+                  Phone Number
                 </label>
                 <input
-                  name="mobileNumber"
-                  value={profile.mobileNumber}
+                  name="phone"
+                  value={profile.phone}
                   onChange={handleChange}
-                  placeholder="Enter your mobile number"
+                  placeholder="Enter your phone number"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#287371] focus:border-transparent transition"
                 />
               </div>

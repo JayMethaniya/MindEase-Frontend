@@ -15,7 +15,6 @@ import VideoResources from "./Page/Home/pages/Resources/VideoResources/index";
 import AddBlog from "./Page/Home/pages/Social/AddBlog/index";
 import BlogDetail from "./Page/Home/pages/Social/Blogs/BlogDetails";
 import Blog from "./Page/Home/pages/Social/Blogs/index";
-import Group from "./Page/Home/pages/Social/Groups/SupportGroupsMain";
 import Quiz from "./Page/Home/pages/Social/Quiz";
 import QuizComponent from "./Page/Home/pages/Social/Quiz/QuizComponent";
 import Relax from "./Page/Home/pages/Social/Relax/index";
@@ -115,18 +114,9 @@ const protectedRoutes = [
       </ProtectedWrapper>
     ),
   },
+  
   {
-    path: "/social/group",
-    element: (
-      <ProtectedWrapper>
-        <DefaultLayout>
-          <Group />
-        </DefaultLayout>
-      </ProtectedWrapper>
-    ),
-  },
-  {
-    path: "/social/quiz",
+    path: "/page/quiz",
     element: (
       <ProtectedWrapper>
         <DefaultLayout>
@@ -156,7 +146,7 @@ const protectedRoutes = [
     ),
   },
   {
-    path: "/social/relax",
+    path: "/page/relax",
     element: (
       <ProtectedWrapper>
         <DefaultLayout>
