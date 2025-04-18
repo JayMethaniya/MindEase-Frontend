@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Challenges: React.FC = () => {
   return (
-    <div className="flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-16 justify-between px-6 lg:px-16 mt-10 bg-[#F1E8DD]">
+    <div className="flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-16 justify-between px-6 lg:px-16 mt-1">
       {/* Image Section */}
       <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
         <img

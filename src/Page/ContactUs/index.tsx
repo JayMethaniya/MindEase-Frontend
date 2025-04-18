@@ -36,17 +36,17 @@ const ContactSection: React.FC = () => {
   };
 
   return (
-    <section className="bg-[#F1E8DD] min-h-screen" id="contact">
+    <section className="bg-[#F1F8F8] min-h-screen" id="contact">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="mb-4">
           <div className="mb-6 max-w-3xl text-center md:mx-auto md:mb-12">
             <p className="text-base font-bold uppercase tracking-wide text-[#287371]">
               Mental Wellness
             </p>
-            <h2 className="font-heading mb-4 text-3xl font-bold tracking-tight text-[#1e3245] sm:text-5xl">
+            <h2 className="font-heading mb-4 text-3xl font-bold tracking-tight text-[#1E3A3A] sm:text-5xl">
               Let's Connect for a Healthier Mind
             </h2>
-            <p className="mx-auto mt-4 max-w-3xl text-xl text-[#2a4660]">
+            <p className="mx-auto mt-4 max-w-3xl text-xl text-[#287371]">
               "Healing starts with a conversation. Reach out and take the first step towards mental wellness."
             </p>
           </div>
@@ -58,34 +58,34 @@ const ContactSection: React.FC = () => {
             </p>
             <ul className="mb-6 md:mb-0 space-y-6">
               <li className="flex items-start">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#A7D7C5] text-black">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#DDECE9] text-[#287371]">
                   <MapIcon className="h-6 w-6" />
                 </div>
                 <div className="ml-4">
-                  <h3 className="mb-2 text-lg font-bold leading-6 text-[#2a4660]">Our Address</h3>
-                  <p className="text-[#3ca8a4] font-semibold">123 Serenity Avenue, Peaceful City</p>
+                  <h3 className="mb-2 text-lg font-bold leading-6 text-[#1E3A3A]">Our Address</h3>
+                  <p className="text-[#287371] font-semibold">123 Serenity Avenue, Peaceful City</p>
                 </div>
               </li>
               <li className="flex items-start">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#A7D7C5] text-black">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#DDECE9] text-[#287371]">
                   <Contact className="h-6 w-6" />
                 </div>
                 <div className="ml-4">
-                  <h3 className="mb-2 text-lg font-bold leading-6 text-[#2a4660]">Contact</h3>
-                  <p className="text-[#3ca8a4] font-semibold">Phone: +91 6351415942</p>
-                  <p className="text-[#3ca8a4] font-semibold">Email: support@mindwell.org</p>
+                  <h3 className="mb-2 text-lg font-bold leading-6 text-[#1E3A3A]">Contact</h3>
+                  <p className="text-[#287371] font-semibold">Phone: +91 6351415942</p>
+                  <p className="text-[#287371] font-semibold">Email: support@mindwell.org</p>
                 </div>
               </li>
             </ul>
           </div>
 
           <div className="w-full md:w-1/2">
-            <div className="card h-fit p-5 md:p-12 rounded-xl bg-gradient-to-r from-[#A7D7C5] to-[#6AA889] shadow-lg">
-              <h2 className="mb-4 text-2xl font-bold text-[#2a4660]">Reach Out to Us</h2>
+            <div className="card h-fit p-5 md:p-12 rounded-xl bg-[#DDECE9] shadow-lg">
+              <h2 className="mb-4 text-2xl font-bold text-[#1E3A3A]">Reach Out to Us</h2>
               <form id="contactForm" onSubmit={handleSubmit}>
                 <div className="mb-6 space-y-4">
                   <div>
-                    <label htmlFor="name" className="block pb-1 text-xs uppercase tracking-wider text-[#436a57] font-extrabold">
+                    <label htmlFor="name" className="block pb-1 text-xs uppercase tracking-wider text-[#287371] font-extrabold">
                       Name
                     </label>
                     <input
@@ -95,12 +95,12 @@ const ContactSection: React.FC = () => {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Your name"
-                      className="w-full rounded-md border border-black py-2 px-4 shadow-sm bg-[#f9f5ef] focus:ring-2 focus:ring-[#287371] focus:border-transparent"
+                      className="w-full rounded-md border border-[#DDECE9] py-2 px-4 shadow-sm bg-white focus:ring-2 focus:ring-[#287371] focus:border-transparent"
                       required
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block pb-1 text-xs uppercase tracking-wider text-[#436a57] font-extrabold">
+                    <label htmlFor="email" className="block pb-1 text-xs uppercase tracking-wider text-[#287371] font-extrabold">
                       Email
                     </label>
                     <input
@@ -110,12 +110,12 @@ const ContactSection: React.FC = () => {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="Your email"
-                      className="w-full rounded-md border border-black py-2 px-4 shadow-sm bg-[#f9f5ef] focus:ring-2 focus:ring-[#287371] focus:border-transparent"
+                      className="w-full rounded-md border border-[#DDECE9] py-2 px-4 shadow-sm bg-white focus:ring-2 focus:ring-[#287371] focus:border-transparent"
                       required
                     />
                   </div>
                   <div>
-                    <label htmlFor="message" className="block pb-1 text-xs uppercase tracking-wider text-[#436a57] font-extrabold">
+                    <label htmlFor="message" className="block pb-1 text-xs uppercase tracking-wider text-[#287371] font-extrabold">
                       Message
                     </label>
                     <textarea
@@ -126,7 +126,7 @@ const ContactSection: React.FC = () => {
                       cols={30}
                       rows={5}
                       placeholder="How can we help you?"
-                      className="w-full rounded-md border border-black py-2 px-4 shadow-sm bg-[#f9f5ef] focus:ring-2 focus:ring-[#287371] focus:border-transparent"
+                      className="w-full rounded-md border border-[#DDECE9] py-2 px-4 shadow-sm bg-white focus:ring-2 focus:ring-[#287371] focus:border-transparent"
                       required
                     ></textarea>
                   </div>
@@ -135,7 +135,7 @@ const ContactSection: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full rounded-md bg-[#2a4660] px-6 py-3 text-white font-xl hover:bg-[#1c2f40] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full rounded-md bg-[#287371] px-6 py-3 text-white font-xl hover:bg-[#1E3A3A] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isLoading ? (
                       <>

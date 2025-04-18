@@ -20,7 +20,7 @@ const QuickAccess: React.FC = () => {
           through journaling.
         </p>
         {token ? (
-          <div className=' mt-16 w-full h-16 flex justify-center items-center'>
+          <div className=' mt-10 w-full h-16 flex justify-center items-center'>
             <Link
               to="/journal-entry"
              className="px-6 w-full py-3 text-center bg-teal-500 text-white font-semibold rounded-lg shadow-md hover:bg-teal-600 transition"
@@ -29,7 +29,7 @@ const QuickAccess: React.FC = () => {
             </Link>
           </div>
         ) : (
-          <div className=' mt-16 w-full h-16 flex justify-center items-center'>
+          <div className=' mt-10 w-full h-16 flex justify-center items-center'>
             <Link
               to="/login"
               className="px-6 w-full py-3 text-center bg-teal-500 text-white font-semibold rounded-lg shadow-md hover:bg-teal-600 transition"

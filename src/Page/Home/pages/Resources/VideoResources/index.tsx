@@ -64,24 +64,32 @@ const VideoResources = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Video Resources</h1>
-      <ul>
-        {videoResources.map((resource) => (
-          <li key={resource._id} style={{ marginBottom: "2rem" }}>
-            <p>{resource.title}</p>
-            <iframe
-              width="560"
-              height="315"
-              src={convertToEmbedUrl(resource.videoUrl)}
-              title={resource.title}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </li>
-        ))}
-      </ul>
+    <div className="min-h-screen bg-[#F1F8F8] p-8">
+      <div className=" mx-auto">
+        <h1 className="text-3xl font-bold text-[#1E3A3A] mb-2">🎥 Video Resources</h1>
+        <p className="text-[#287371] mb-8">Watch educational videos about mental health and wellness</p>
+        
+        <div className="grid gap-8 md:grid-cols-2">
+          {videoResources.map((resource) => (
+            <div 
+              key={resource._id}
+              className="bg-white w-[400px] h-[300px] rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border border-[#DDECE9]"
+            >
+              <h2 className="text-xl font-semibold text-[#1E3A3A] mb-4">{resource.title}</h2>
+              <div className="relative pb-[56.25%] h-0 rounded-lg overflow-hidden">
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src={convertToEmbedUrl(resource.videoUrl)}
+                  title={resource.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

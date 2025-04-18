@@ -136,8 +136,8 @@ const MoodTracker = () => {
   }));
 
   return (
-    <div className="h-full text-[#287371] flex flex-col items-center overflow-y-auto bg-[#F1E8DD] p-6">
-      <h2 className="text-2xl font-bold mb-4 text-[#1E3245]">
+    <div className="h-full text-[#1E3A3A] flex flex-col items-center overflow-y-auto bg-[#F1F8F8] p-6">
+      <h2 className="text-2xl font-bold mb-4 text-[#287371]">
         How are you feeling today?
       </h2>
 
@@ -145,10 +145,10 @@ const MoodTracker = () => {
         {moods.map((m) => (
           <button
             key={m.label}
-            className={`p-3 border-2 border-[#1E3245] rounded-lg text-2xl transition ${
+            className={`p-3 border-2 border-[#287371] rounded-lg text-2xl transition ${
               selectedMood?.label === m.label
                 ? "bg-[#287371] text-white"
-                : "text-[#1E3245]"
+                : "text-[#1E3A3A] hover:bg-[#DDECE9]"
             }`}
             onClick={() => handleMoodSelect(m)}
           >
@@ -161,43 +161,53 @@ const MoodTracker = () => {
         value={note}
         onChange={(e) => setNote(e.target.value)}
         placeholder="Add a note (optional)"
-        className="w-1/2 p-2 border rounded-md mb-4 bg-white text-[#1E3245]"
+        className="w-1/2 p-2 border border-[#DDECE9] rounded-md mb-4 bg-white text-[#1E3A3A] focus:border-[#287371] focus:ring-1 focus:ring-[#287371]"
       />
 
       <button
         onClick={handleSaveMood}
         disabled={!selectedMood}
-        className="px-4 py-2 bg-[#287371] text-white text-lg rounded-full shadow-lg hover:bg-[#1F5B5B] transition disabled:opacity-50"
+        className="px-4 py-2 bg-[#287371] text-white text-lg rounded-full shadow-lg hover:bg-[#1E3A3A] transition disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Save Mood
       </button>
 
-      <h3 className="text-lg font-bold mt-6 text-[#1E3245]">
+      <h3 className="text-lg font-bold mt-6 text-[#287371]">
         Mood History (Last 7 Days)
       </h3>
 
       {suggestion && (
-        <div className="my-4 p-4 bg-[#398885] shadow-md rounded-lg w-[60%] h-32 text-center">
+        <div className="my-4 p-4 bg-[#287371] shadow-md rounded-lg w-[60%] h-32 text-center">
           <h4 className="text-xl font-bold text-white">
             ✨ Self-Care Tip for You:
           </h4>
-          <p className="text-lg text-[#f4e6d5]">{suggestion}</p>
+          <p className="text-lg text-[#F1F8F8]">{suggestion}</p>
         </div>
       )}
 
       <ResponsiveContainer width="60%" height={300}>
         <LineChart data={graphData}>
-          <XAxis dataKey="date" />
+          <XAxis dataKey="date" stroke="#1E3A3A" />
           <YAxis
             domain={[1, moods.length]}
             tickFormatter={(tick: number) => moods[tick - 1]?.label}
+            stroke="#1E3A3A"
           />
-          <Tooltip formatter={(value: number) => moods[value - 1]?.label} />
+          <Tooltip 
+            formatter={(value: number) => moods[value - 1]?.label}
+            contentStyle={{ 
+              backgroundColor: '#F1F8F8',
+              border: '1px solid #DDECE9',
+              borderRadius: '8px',
+              color: '#1E3A3A'
+            }}
+          />
           <Line
             type="monotone"
             dataKey="mood"
             stroke="#287371"
             strokeWidth={3}
+            dot={{ fill: '#287371', strokeWidth: 2 }}
           />
         </LineChart>
       </ResponsiveContainer>

@@ -66,7 +66,6 @@ const DoctorsList: React.FC = () => {
         return;
       }
 
-      // First check if a chat already exists
       const existingChats = await axios.get<ChatResponse[]>(
         `http://localhost:3001/chat/${localStorage.getItem("userId")}`,
         {
@@ -76,16 +75,13 @@ const DoctorsList: React.FC = () => {
         }
       );
 
-      // Find existing chat with this doctor
       const existingChat = existingChats.data.find(chat => 
         chat.members.includes(doctorId)
       );
 
       if (existingChat) {
-        // If chat exists, navigate to it
         navigate(`/messages?chatId=${existingChat._id}`);
       } else {
-        // Create a new chat if none exists
         const response = await axios.post<ChatResponse>(
           "http://localhost:3001/chat",
           {
@@ -108,20 +104,20 @@ const DoctorsList: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-600"></div>
+      <div className="flex justify-center items-center h-screen bg-[#F1F8F8]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#287371]"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full text-center">
-          <p className="text-red-500 text-lg">{error}</p>
+      <div className="flex justify-center items-center h-screen bg-[#F1F8F8]">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-[#DDECE9] max-w-md w-full text-center">
+          <p className="text-[#287371] text-lg">{error}</p>
           <button
             onClick={() => navigate("/login")}
-            className="mt-4 bg-teal-600 text-white py-2 px-4 rounded-lg hover:bg-teal-700 transition"
+            className="mt-4 bg-[#287371] text-white py-2 px-4 rounded-lg hover:bg-[#1E3A3A] transition-colors duration-300"
           >
             Go to Login
           </button>
@@ -131,13 +127,13 @@ const DoctorsList: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#F1F8F8] py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-teal-800 mb-2">
+          <h1 className="text-3xl font-bold text-[#1E3A3A] mb-2">
             Find Your Doctor
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-[#287371] max-w-2xl mx-auto">
             Browse our network of qualified healthcare professionals and find
             the right specialist for your needs.
           </p>
@@ -149,7 +145,7 @@ const DoctorsList: React.FC = () => {
             <div className="relative flex-1">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg
-                  className="h-5 w-5 text-gray-400"
+                  className="h-5 w-5 text-[#287371]"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -165,16 +161,16 @@ const DoctorsList: React.FC = () => {
                 placeholder="Search by name, specialization, or hospital"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                className="block w-full pl-10 pr-3 py-2 border border-[#DDECE9] rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#287371] focus:border-[#287371]"
               />
             </div>
 
             <button
               onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="md:hidden flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm"
+              className="md:hidden flex items-center justify-center gap-2 px-4 py-2 bg-white border border-[#DDECE9] rounded-lg shadow-sm hover:bg-[#F1F8F8]"
             >
               <svg
-                className="h-5 w-5 text-gray-600"
+                className="h-5 w-5 text-[#287371]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -191,13 +187,13 @@ const DoctorsList: React.FC = () => {
           </div>
 
           {(isFilterOpen || window.innerWidth >= 768) && (
-            <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-              <h3 className="font-medium text-gray-700 mb-3">Filter by:</h3>
+            <div className="bg-white p-4 rounded-lg shadow-sm border border-[#DDECE9]">
+              <h3 className="font-medium text-[#1E3A3A] mb-3">Filter by:</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
                   <label
                     htmlFor="specialization"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-[#1E3A3A] mb-1"
                   >
                     Specialization
                   </label>
@@ -207,7 +203,7 @@ const DoctorsList: React.FC = () => {
                     placeholder="e.g. Cardiologist"
                     value={specialization}
                     onChange={(e) => setSpecialization(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-2 border border-[#DDECE9] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#287371] focus:border-[#287371]"
                   />
                 </div>
               </div>
@@ -221,7 +217,7 @@ const DoctorsList: React.FC = () => {
             {doctors.map((doctor) => (
               <div
                 key={doctor._id}
-                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-[#DDECE9]"
               >
                 <div className="p-5">
                   <div className="flex flex-col justify-center items-center">
@@ -230,33 +226,33 @@ const DoctorsList: React.FC = () => {
                         <img
                           src={doctor.profilePhoto}
                           alt={doctor.fullName}
-                          className="w-full rounded-3xl object-cover border-2 border-teal-100"
+                          className="w-full rounded-3xl object-cover border-2 border-[#DDECE9]"
                         />
                       ) : (
-                        <div className="w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center border-2 border-teal-100">
-                          <span className="text-xl font-medium text-teal-800">
+                        <div className="w-16 h-16 rounded-full bg-[#F1F8F8] flex items-center justify-center border-2 border-[#DDECE9]">
+                          <span className="text-xl font-medium text-[#287371]">
                             {doctor.fullName.charAt(0)}
                           </span>
                         </div>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h2 className="text-lg font-bold text-gray-900 truncate">
+                      <h2 className="text-lg font-bold text-[#1E3A3A] truncate">
                         Dr. {doctor.fullName}
                       </h2>
-                      <p className="text-sm text-teal-600 font-medium">
+                      <p className="text-sm text-[#287371] font-medium">
                         {doctor.specialization}
                       </p>
-                      <p className="text-sm text-gray-500 truncate">
+                      <p className="text-sm text-[#287371] truncate">
                         {doctor.hospital}
                       </p>
                     </div>
                   </div>
 
-                  <div className="mt-4 space-y-2 text-sm text-gray-600">
+                  <div className="mt-4 space-y-2 text-sm text-[#287371]">
                     <div className="flex items-start">
                       <svg
-                        className="flex-shrink-0 h-5 w-5 text-teal-500 mr-2"
+                        className="flex-shrink-0 h-5 w-5 text-[#287371] mr-2"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -272,7 +268,7 @@ const DoctorsList: React.FC = () => {
                     </div>
                     <div className="flex items-start">
                       <svg
-                        className="flex-shrink-0 h-5 w-5 text-teal-500 mr-2"
+                        className="flex-shrink-0 h-5 w-5 text-[#287371] mr-2"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -288,7 +284,7 @@ const DoctorsList: React.FC = () => {
                     </div>
                     <div className="flex items-start">
                       <svg
-                        className="flex-shrink-0 h-5 w-5 text-teal-500 mr-2"
+                        className="flex-shrink-0 h-5 w-5 text-[#287371] mr-2"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -312,7 +308,7 @@ const DoctorsList: React.FC = () => {
 
                   <button
                     onClick={() => handleMessageClick(doctor._id)}
-                    className="w-full mt-4 bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition"
+                    className="w-full mt-4 bg-[#287371] hover:bg-[#1E3A3A] text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors duration-300"
                   >
                     <svg
                       className="h-5 w-5"
@@ -334,9 +330,9 @@ const DoctorsList: React.FC = () => {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+          <div className="bg-white rounded-xl shadow-sm p-8 text-center border border-[#DDECE9]">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto h-12 w-12 text-[#287371]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -348,10 +344,10 @@ const DoctorsList: React.FC = () => {
                 d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <h3 className="mt-2 text-lg font-medium text-gray-900">
+            <h3 className="mt-2 text-lg font-medium text-[#1E3A3A]">
               No doctors found
             </h3>
-            <p className="mt-1 text-gray-500">
+            <p className="mt-1 text-[#287371]">
               {searchTerm || specialization
                 ? "Try adjusting your search or filter criteria"
                 : "There are currently no doctors available in our network"}
@@ -362,7 +358,7 @@ const DoctorsList: React.FC = () => {
                   setSearchTerm("");
                   setSpecialization("");
                 }}
-                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-[#287371] hover:bg-[#1E3A3A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#287371] transition-colors duration-300"
               >
                 Clear filters
               </button>

@@ -43,18 +43,18 @@ const Goals: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-[#F1E3D1] p-8 rounded-2xl   mx-auto">
+    <div className="bg-white w-full md:w-4/5 lg:w-2/3 p-4 md:p-6 lg:p-8 rounded-2xl mx-auto">
       {/* Title */}
-      <h2 className="text-3xl font-bold text-[#287371] text-center">
+      <h2 className="text-2xl md:text-3xl font-bold text-[#287371] text-center">
         🎯 Today's Mental Health Goals
       </h2>
 
       {/* Goal List */}
-      <div className="flex flex-wrap justify-center gap-4 mt-5">
+      <div className="flex flex-wrap justify-center gap-3 md:gap-4 mt-4 md:mt-5">
         {goals.map((goal, index) => (
           <div
             key={index}
-            className="p-4 w-60 h-[100px] bg-[#DDECE9] text-center flex items-center justify-center rounded-lg text-[#1E3A3A] text-lg font-medium shadow-md hover:bg-[#C3DFD7] transition"
+            className="p-3 md:p-4 w-full sm:w-48 md:w-60 h-[100px] bg-[#DDECE9] text-center flex items-center justify-center rounded-lg text-[#1E3A3A] text-base md:text-lg font-medium shadow-md hover:bg-[#C3DFD7] transition"
           >
             {goal}
           </div>
@@ -62,11 +62,11 @@ const Goals: React.FC = () => {
       </div>
 
       {/* Mental Health Tip Section */}
-      <div className="mt-8 bg-[#DDECE9] py-5 mx-28  rounded-xl shadow-md text-center">
-        <h3 className="text-2xl font-semibold text-[#287371]">
+      <div className="mt-6 md:mt-8 bg-[#DDECE9] py-4 md:py-5 mx-4 md:mx-8 lg:mx-28 rounded-xl shadow-md text-center">
+        <h3 className="text-xl md:text-2xl font-semibold text-[#287371]">
           🧘 Mental Health Tip of the Day
         </h3>
-        <p className="text-gray-600 text-xl mt-2">{randomTip}</p>
+        <p className="text-gray-600 text-base md:text-xl mt-2 px-2 md:px-4">{randomTip}</p>
       </div>
     </div>
   );
