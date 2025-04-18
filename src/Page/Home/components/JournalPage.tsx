@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import NightsStayIcon from '@mui/icons-material/NightsStay';
@@ -6,15 +8,23 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 type MoodType = 'happy' | 'neutral' | 'sad';
 type JournalEntry = {
-  id: string;
+  _id: string;
   date: string;
   title: string;
   content: string;
   mood: MoodType;
 };
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+}
 
 const JournalPage = () => {
   const [entries, setEntries] = useState<JournalEntry[]>([]);
@@ -22,28 +32,106 @@ const JournalPage = () => {
   const [content, setContent] = useState('');
   const [mood, setMood] = useState<MoodType>('neutral');
   const [isDaytime, setIsDaytime] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [editingEntry, setEditingEntry] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Get user ID from localStorage or use a default one
+  const getUserId = () => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      const newUserId = Date.now().toString();
+      localStorage.setItem('userId', newUserId);
+      return newUserId;
+    }
+    return userId;
+  };
+
+  useEffect(() => {
+    fetchJournalEntries();
+  }, []);
+
+  const fetchJournalEntries = async () => {
+    try {
+      const response = await axios.get<ApiResponse<JournalEntry[]>>('http://localhost:3001/journal', {
+        params: {
+          userId: getUserId()
+        }
+      });
+      setEntries(response.data.data);
+    } catch (error) {
+      console.error('Error fetching journal entries:', error);
+      toast.error('Failed to fetch journal entries');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !content.trim()) return;
 
-    const newEntry: JournalEntry = {
-      id: Date.now().toString(),
-      date: new Date().toLocaleDateString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
-      title,
-      content,
-      mood,
-    };
+    setIsLoading(true);
+    try {
+      if (editingEntry) {
+        await axios.put(
+          `http://localhost:3001/journal/${editingEntry}`,
+          { 
+            title, 
+            content, 
+            mood,
+            userId: getUserId()
+          }
+        );
+        toast.success('Entry updated successfully');
+      } else {
+        await axios.post(
+          'http://localhost:3001/journal',
+          { 
+            title, 
+            content, 
+            mood,
+            userId: getUserId()
+          }
+        );
+        toast.success('Entry created successfully');
+      }
+      fetchJournalEntries();
+      resetForm();
+    } catch (error) {
+      console.error('Error saving journal entry:', error);
+      toast.error('Failed to save journal entry');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    setEntries([newEntry, ...entries]);
+  const handleDelete = async (id: string) => {
+    if (!window.confirm('Are you sure you want to delete this entry?')) return;
+
+    try {
+      await axios.delete(`http://localhost:3001/journal/${id}`, {
+        params: {
+          userId: getUserId()
+        }
+      });
+      toast.success('Entry deleted successfully');
+      fetchJournalEntries();
+    } catch (error) {
+      console.error('Error deleting journal entry:', error);
+      toast.error('Failed to delete journal entry');
+    }
+  };
+
+  const handleEdit = (entry: JournalEntry) => {
+    setTitle(entry.title);
+    setContent(entry.content);
+    setMood(entry.mood);
+    setEditingEntry(entry._id);
+  };
+
+  const resetForm = () => {
     setTitle('');
     setContent('');
     setMood('neutral');
+    setEditingEntry(null);
   };
 
   return (
@@ -156,10 +244,15 @@ const JournalPage = () => {
 
                     <button
                       type="submit"
-                      className="flex items-center px-6 py-3 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white font-medium rounded-lg transition-all transform hover:scale-105 shadow-lg"
+                      disabled={isLoading}
+                      className="flex items-center px-6 py-3 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white font-medium rounded-lg transition-all transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <SaveIcon sx={{ mr: 1 }} />
-                      Save Entry
+                      {isLoading ? (
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                      ) : (
+                        <SaveIcon sx={{ mr: 1 }} />
+                      )}
+                      {editingEntry ? 'Update Entry' : 'Save Entry'}
                     </button>
                   </div>
                 </form>
@@ -182,12 +275,25 @@ const JournalPage = () => {
                   <div className="space-y-6 max-h-[600px] overflow-y-auto pr-2">
                     {entries.map((entry) => (
                       <div
-                        key={entry.id}
-                        className="p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-teal-300 transition-colors"
+                        key={entry._id}
+                        className="p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-teal-300 transition-colors group"
                       >
                         <div className="flex justify-between items-start mb-2">
                           <h3 className="font-medium text-gray-800">{entry.title}</h3>
-                          <span className="text-xs text-gray-500">{entry.date}</span>
+                          <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button
+                              onClick={() => handleEdit(entry)}
+                              className="p-1 text-teal-600 hover:text-teal-800"
+                            >
+                              <EditIcon fontSize="small" />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(entry._id)}
+                              className="p-1 text-red-600 hover:text-red-800"
+                            >
+                              <DeleteIcon fontSize="small" />
+                            </button>
+                          </div>
                         </div>
                         <p className="text-gray-600 text-sm mb-3 line-clamp-3">
                           {entry.content}
@@ -211,6 +317,13 @@ const JournalPage = () => {
                               <span>Sad</span>
                             </>
                           )}
+                        </div>
+                        <div className="text-xs text-gray-400 mt-2">
+                          {new Date(entry.date).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                          })}
                         </div>
                       </div>
                     ))}
