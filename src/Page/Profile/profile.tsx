@@ -8,7 +8,11 @@ interface Profile {
   email: string;
   phone: string;
   bio: string;
-  address: string;
+  street: string;
+  area: string;
+  city: string;
+  state: string;
+  pincode: string;
   profilePhoto?: string;
   role: string;
   verified?: boolean;
@@ -26,7 +30,11 @@ export default function Profile() {
     email: "",
     phone: "",
     bio: "",
-    address: "",
+    street: "",
+    area: "",
+    city: "",
+    state: "",
+    pincode: "",
     role: "",
   });
   useEffect(() => {
@@ -180,9 +188,9 @@ export default function Profile() {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Address</p>
+                      <p className="text-sm text-gray-500">Location</p>
                       <p className="text-gray-800 font-medium">
-                        {profile.address}
+                        {profile.street}, {profile.area}, {profile.city}, {profile.state} - {profile.pincode}
                       </p>
                     </div>
                   </div>

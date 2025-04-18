@@ -6,7 +6,11 @@ type Profile = {
   fullName: string;
   email: string;
   mobileNumber: string;
-  address: string;
+  street: string;
+  area: string;
+  city: string;
+  state: string;
+  pincode: string;
   profilePhoto?: File | null;
   specialization?: string;
   hospital?: string;
@@ -19,7 +23,11 @@ export default function Settings() {
     fullName: "",
     email: "",
     mobileNumber: "",
-    address: "",
+    street: "",
+    area: "",
+    city: "",
+    state: "",
+    pincode: "",
     profilePhoto: null,
     specialization: "",
     hospital: "",
@@ -49,7 +57,11 @@ const userId = localStorage.getItem("userId");
           fullName: response.data.fullName || "",
           email: response.data.email || "",
           mobileNumber: response.data.mobileNumber || "",
-          address: response.data.address || "",
+          street: response.data.street || "",
+          area: response.data.area || "",
+          city: response.data.city || "",
+          state: response.data.state || "",
+          pincode: response.data.pincode || "",
           profilePhoto: null,
           specialization: response.data.specialization || "",
           hospital: response.data.hospital || "",
@@ -200,13 +212,61 @@ const userId = localStorage.getItem("userId");
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Address
+                  Street
                 </label>
                 <input
-                  name="address"
-                  value={profile.address}
+                  name="street"
+                  value={profile.street}
                   onChange={handleChange}
-                  placeholder="Enter your address"
+                  placeholder="Enter your street"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#287371] focus:border-transparent transition"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Area
+                </label>
+                <input
+                  name="area"
+                  value={profile.area}
+                  onChange={handleChange}
+                  placeholder="Enter your area"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#287371] focus:border-transparent transition"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  City
+                </label>
+                <input
+                  name="city"
+                  value={profile.city}
+                  onChange={handleChange}
+                  placeholder="Enter your city"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#287371] focus:border-transparent transition"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  State
+                </label>
+                <input
+                  name="state"
+                  value={profile.state}
+                  onChange={handleChange}
+                  placeholder="Enter your state"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#287371] focus:border-transparent transition"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Pincode
+                </label>
+                <input
+                  name="pincode"
+                  value={profile.pincode}
+                  onChange={handleChange}
+                  placeholder="Enter your pincode"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#287371] focus:border-transparent transition"
                 />
               </div>

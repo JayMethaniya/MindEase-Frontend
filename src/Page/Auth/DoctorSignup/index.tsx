@@ -12,7 +12,11 @@ interface FormData {
   password: string;
   phone: string;
   hospital: string;
-  address: string;
+  street: string;
+  area: string;
+  city: string;
+  state: string;
+  pincode: string;
   medicalRegNumber: string;
   specialization: string;
   degrees: string;
@@ -30,7 +34,11 @@ const Signup: React.FC = () => {
     password: "",
     phone: "",
     hospital: "",
-    address: "",
+    street: "",
+    area: "",
+    city: "",
+    state: "",
+    pincode: "",
     medicalRegNumber: "",
     specialization: "",
     degrees: "",
@@ -59,11 +67,15 @@ const Signup: React.FC = () => {
     formPayload.append("password", formData.password);
     formPayload.append("phone", formData.phone);
     formPayload.append("hospital", formData.hospital);
-    formPayload.append("address", formData.address);
+    formPayload.append("street", formData.street);
+    formPayload.append("area", formData.area);
+    formPayload.append("city", formData.city);
+    formPayload.append("state", formData.state);
+    formPayload.append("pincode", formData.pincode);
     formPayload.append("medicalRegNumber", formData.medicalRegNumber);
     formPayload.append("specialization", formData.specialization);
     formPayload.append("degrees", formData.degrees);
-    formPayload.append("role", formData.role); // Ensure role is sent
+    formPayload.append("role", formData.role);
 
     if (formData.profilePhoto) {
       formPayload.append("profilePhoto", formData.profilePhoto);
@@ -79,17 +91,28 @@ const Signup: React.FC = () => {
         formPayload,
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Important for file uploads
+            "Content-Type": "multipart/form-data",
           },
         }
       );
       if (response.status === 201) {
         setMessage("Account created successfully!");
         setTimeout(() => navigate("/login"), 1500);
-        console.log("Response:", response.data);
       }
-    } catch (error) {
-      setMessage("Error signing up. Please try again.");
+    } catch (error: any) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        const errorMessage = error.response.data.message || error.response.data.errors?.[0]?.msg || "Error signing up. Please try again.";
+        setMessage(errorMessage);
+      } else if (error.request) {
+        // The request was made but no response was received
+        setMessage("No response from server. Please try again.");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        setMessage("Error setting up the request. Please try again.");
+      }
+      console.error("Signup Error:", error);
     } finally {
       setLoading(false);
     }
@@ -241,23 +264,103 @@ const Signup: React.FC = () => {
                   />
                 </div>
               </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-[#287371] uppercase tracking-wider mb-1">
+                    Street
+                  </label>
+                  <input
+                    type="text"
+                    name="street"
+                    placeholder="Street"
+                    required
+                    value={formData.street}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                    className="w-full p-2 text-sm border border-[#DDECE9] rounded-lg focus:ring-2 focus:ring-[#287371] focus:border-transparent transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#287371] uppercase tracking-wider mb-1">
+                    Area
+                  </label>
+                  <input
+                    type="text"
+                    name="area"
+                    placeholder="Area"
+                    required
+                    value={formData.area}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                    className="w-full p-2 text-sm border border-[#DDECE9] rounded-lg focus:ring-2 focus:ring-[#287371] focus:border-transparent transition"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-[#287371] uppercase tracking-wider mb-1">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    name="city"
+                    placeholder="City"
+                    required
+                    value={formData.city}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                    className="w-full p-2 text-sm border border-[#DDECE9] rounded-lg focus:ring-2 focus:ring-[#287371] focus:border-transparent transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#287371] uppercase tracking-wider mb-1">
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    name="state"
+                    placeholder="State"
+                    required
+                    value={formData.state}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                    className="w-full p-2 text-sm border border-[#DDECE9] rounded-lg focus:ring-2 focus:ring-[#287371] focus:border-transparent transition"
+                  />
+                </div>
+              </div>
               <div>
                 <label className="block text-xs font-semibold text-[#287371] uppercase tracking-wider mb-1">
-                  Address
+                  Pincode
                 </label>
-                <textarea
-                  value={formData.address}
+                <input
+                  type="text"
+                  name="pincode"
+                  placeholder="Pincode"
+                  required
+                  value={formData.pincode}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
                       [e.target.name]: e.target.value,
                     })
                   }
-                  name="address"
-                  placeholder="Address"
-                  required
-                  className="w-full p-2 text-sm border border-[#DDECE9] rounded-lg focus:ring-2 focus:ring-[#287371] focus:border-transparent transition resize-none"
-                  rows={2}
+                  className="w-full p-2 text-sm border border-[#DDECE9] rounded-lg focus:ring-2 focus:ring-[#287371] focus:border-transparent transition"
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
