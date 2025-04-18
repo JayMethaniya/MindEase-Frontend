@@ -226,7 +226,7 @@ const DoctorsList: React.FC = () => {
                         <img
                           src={doctor.profilePhoto}
                           alt={doctor.fullName}
-                          className="w-full rounded-3xl object-cover border-2 border-[#DDECE9]"
+                          className="w-full h-[350px] rounded-3xl object-cover border-2 border-[#DDECE9]"
                         />
                       ) : (
                         <div className="w-16 h-16 rounded-full bg-[#F1F8F8] flex items-center justify-center border-2 border-[#DDECE9]">
