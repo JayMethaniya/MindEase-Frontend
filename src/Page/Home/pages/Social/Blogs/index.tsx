@@ -5,45 +5,49 @@ import axios from "axios";
 
 // Define TypeScript interface for blog post data
 interface BlogPost {
-  authorId: string;
+  _id: string;
   title: string;
   content: string;
-  author: string;
-  date: string;
-  blogImage?: string; // Optional image property
+  authorId: {
+    _id: string;
+    fullName: string;
+    email: string;
+  };
+  blogImage?: string;
+  createdAt: string;
+}
+
+interface ApiResponse {
+  success: boolean;
+  data: BlogPost[];
+  message?: string;
 }
 
 const BlogPage: React.FC = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const date = new Date().toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
-      const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("token");
-      if (!userId) {
-        console.error("User ID is not available.");
+      if (!token) {
+        console.error("No authentication token found");
         return;
       }
 
       try {
-        const response = await axios.get<BlogPost[]>(`http://localhost:3001/blog/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` },
+        const response = await axios.get<ApiResponse>("http://localhost:3001/blog", {
+          headers: { Authorization: `Bearer ${token}` }
         });
 
-        if (Array.isArray(response.data)) {
-          const transformedData = response.data.map((entry) => ({
-            ...entry,
-            blogImage: entry.blogImage || blogCTC,
+        if (response.data.success) {
+          const transformedData = response.data.data.map((post) => ({
+            ...post,
+            blogImage: post.blogImage || blogCTC,
           }));
           setBlogPosts(transformedData);
         } else {
-          console.error("Fetched data is not an array:", response.data);
+          console.error("Failed to fetch blogs:", response.data.message);
           setBlogPosts([]);
         }
       } catch (error) {
@@ -87,7 +91,7 @@ const BlogPage: React.FC = () => {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {blogPosts.map((post) => (
               <div 
-                key={post.authorId} 
+                key={post._id} 
                 className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-[#DDECE9]"
               >
                 <img 
@@ -99,9 +103,9 @@ const BlogPage: React.FC = () => {
                   <h2 className="text-xl font-semibold text-[#1E3A3A] mb-3">{post.title}</h2>
                   <p className="text-[#287371] line-clamp-3 mb-4">{post.content}</p>
                   <div className="text-sm text-[#287371] mb-4">
-                    By <span className="font-semibold text-[#1E3A3A]">{post.author}</span> | {date}
+                    By <span className="font-semibold text-[#1E3A3A]">{post.authorId.fullName}</span> | {new Date(post.createdAt).toLocaleDateString()}
                   </div>
-                  <Link to={`/blog/${post.authorId}`}>
+                  <Link to={`/blog/${post._id}`}>
                     <button className="w-full px-4 py-2 bg-[#287371] text-white rounded-lg hover:bg-[#1E3A3A] transition-colors duration-300">
                       Read More
                     </button>
