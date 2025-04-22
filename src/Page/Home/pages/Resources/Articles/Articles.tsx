@@ -20,6 +20,8 @@ const Articles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const token = localStorage.getItem("token") || "";
 
@@ -49,6 +51,16 @@ const Articles = () => {
   useEffect(() => {
     fetchArticles();
   }, []);
+
+  const handleReadMore = (article: Article) => {
+    setSelectedArticle(article);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedArticle(null);
+  };
 
   if (loading) {
     return (
@@ -83,20 +95,42 @@ const Articles = () => {
               >
                 <h2 className="text-xl font-semibold text-[#1E3A3A] mb-3">{article.title}</h2>
                 <p className="text-[#287371] line-clamp-4 mb-4">{article.articleContent}</p>
-                <Link
-                  to={`/article/${article._id}`}
+                <button
+                  onClick={() => handleReadMore(article)}
                   className="inline-flex items-center text-[#287371] hover:text-[#1E3A3A] font-medium"
                 >
                   Read more
                   <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                   </svg>
-                </Link>
+                </button>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      {/* Modal */}
+      {isModalOpen && selectedArticle && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-8 max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-start mb-6">
+              <h2 className="text-2xl font-bold text-[#1E3A3A]">{selectedArticle.title}</h2>
+              <button
+                onClick={closeModal}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="prose max-w-none">
+              <p className="text-[#287371] whitespace-pre-wrap">{selectedArticle.articleContent}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
