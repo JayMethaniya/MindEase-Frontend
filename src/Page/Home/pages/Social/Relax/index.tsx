@@ -1,15 +1,12 @@
 import React from 'react';
-import CalmingVideosSlider from './CalmingVideosSlider';
-import SleepStories from './SleepStories';
-import MeditationResources from './MeditationResources';
+import YogaContent from './YogaContent';
 
-const Relax = () => {
+
+const Relax: React.FC = () => {
   return (
-    <div className="w-full max-w-full overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-4">
-        <CalmingVideosSlider />
-        <SleepStories />
-        <MeditationResources />
+    <div className="min-h-screen">
+      <div className="container mx-auto">
+        <YogaContent />
       </div>
     </div>
   );
