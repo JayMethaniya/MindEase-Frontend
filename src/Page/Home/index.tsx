@@ -6,6 +6,7 @@ import Challenges from "./components/Challenges";
 import HomeMain from "./components/HomeMain";
 import MoodSummary from "./components/MoodSummary";
 import QuickAccess from "./components/QuickAccess";
+import DailyTip from './components/DailyTip';
 
 const Home = () => {
   return (
@@ -15,9 +16,7 @@ const Home = () => {
         <HomeMain />
 
         <div className="w-full h-24 sm:h-32 bg-[#287371] flex items-center justify-center px-4 text-center mt-8">
-          <h1 className="text-xl sm:text-2xl lg:text-3xl text-white font-semibold">
-            🌿 Daily Mindfulness Tip: Take a deep breath and be present.
-          </h1>
+        <DailyTip />
         </div>
 
         <div className="mt-12 space-y-12">
@@ -26,6 +25,7 @@ const Home = () => {
           <MentalHealthVideo />
           <QuickAccess />
           <MoodSummary />
+         
         </div>
       </div>
     </div>
