@@ -110,21 +110,6 @@ const DoctorsList: React.FC = () => {
     );
   }
 
-  if (error) {
-    return (
-      <div className="flex justify-center items-center h-screen bg-[#F1F8F8]">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-[#DDECE9] max-w-md w-full text-center">
-          <p className="text-[#287371] text-lg">{error}</p>
-          <button
-            onClick={() => navigate("/login")}
-            className="mt-4 bg-[#287371] text-white py-2 px-4 rounded-lg hover:bg-[#1E3A3A] transition-colors duration-300"
-          >
-            Go to Login
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#F1F8F8] py-8 px-4 sm:px-6 lg:px-8">

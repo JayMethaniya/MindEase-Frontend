@@ -3,6 +3,7 @@ import axios from "axios";
 import InputEmoji from "react-input-emoji";
 import { format } from "timeago.js";
 import { IoArrowBack } from "react-icons/io5";
+import UserProfileModal from "./userprofile";
 
 interface ChatBoxProps {
   chat: Chat | null;
@@ -10,6 +11,7 @@ interface ChatBoxProps {
   setSendMessage: (msg: any) => void;
   receivedMessage: Message | null;
   onBack: () => void;
+  online: boolean;
 }
 
 interface Chat {
@@ -37,10 +39,12 @@ const ChatBox: React.FC<ChatBoxProps> = ({
   setSendMessage,
   receivedMessage,
   onBack,
+  online,
 }) => {
   const [userData, setUserData] = useState<User | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const [showProfile, setShowProfile] = useState(false);
   const scroll = useRef<HTMLDivElement | null>(null);
   const imageRef = useRef<HTMLInputElement | null>(null);
 
@@ -141,14 +145,19 @@ const ChatBox: React.FC<ChatBoxProps> = ({
             >
               <IoArrowBack size={24} />
             </button>
-            <img
-              src={userData?.profilePhoto}
-              alt="Profile"
-              className="w-10 h-10 rounded-full object-cover"
-            />
-            <div className="text-white">
-              <div className="font-semibold">{userData?.fullName}</div>
-              <div className="text-xs text-teal-100">Online</div>
+            <div 
+              className="flex items-center space-x-3 cursor-pointer flex-1"
+              onClick={() => setShowProfile(true)}
+            >
+              <img
+                src={userData?.profilePhoto}
+                alt="Profile"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <div className="text-white">
+                <div className="font-semibold">{userData?.fullName}</div>
+                <div className="text-xs text-teal-100">{online ? "Online" : "Offline"}</div>
+              </div>
             </div>
           </div>
 
@@ -203,6 +212,15 @@ const ChatBox: React.FC<ChatBoxProps> = ({
               <input type="file" hidden ref={imageRef} />
             </div>
           </form>
+
+          {/* Profile Modal */}
+          {userData && (
+            <UserProfileModal
+              userId={userData._id}
+              isOpen={showProfile}
+              onClose={() => setShowProfile(false)}
+            />
+          )}
         </>
       ) : (
         <div className="flex-1 flex items-center justify-center bg-teal-50">

@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Close, Menu, Notifications } from "@mui/icons-material";
 
 import avatar from "../../assets/avatar.png";
 import logo from "../../assets/logo.png";
 import DropdownMenu from "../DropDown/index";
+import Profile from "../Profile";
 
 interface ProfileType {
   profilePhoto?: string;
@@ -19,7 +19,10 @@ const Header: React.FC = () => {
   const [token, setToken] = useState<string | null>();
   const [profile, setProfilePhoto] = useState("");
   const [userRole, setUserRole] = useState<string | null>(null);
+  const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
+
+
   useEffect(() => {
     const img = { avatar };
     const fetchProfile = async () => {
@@ -59,6 +62,8 @@ const Header: React.FC = () => {
   }, []);
 
   const closeSidebar = () => setIsSidebarOpen(false);
+  const role = localStorage.getItem("role");
+  const isDoctor = role === "doctor";
 
   return (
     <>
@@ -127,16 +132,7 @@ const Header: React.FC = () => {
                 <button className="p-2 rounded-full h-10 w-10 flex items-center justify-center">
                   <Notifications className="text-[#1E4747]" fontSize="large" />
                 </button>
-                <Link
-                  to="/profile"
-                  className="flex items-center gap-2 border-2 rounded-full border-[#1E4747]"
-                >
-                  <img
-                    src={profile}
-                    alt="Profile"
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
-                </Link>
+                <Profile profilePhoto={profile} isDoctor={isDoctor} />
               </div>
             ) : (
               <Link
@@ -194,6 +190,11 @@ const Header: React.FC = () => {
               { name: "Contact Us", path: "/page/contactUs" },
             ]}
           />
+          {token && !isDoctor && (
+            <div className="p-2">
+              <Profile profilePhoto={profile} isDoctor={isDoctor} />
+            </div>
+          )}
         </nav>
       </aside>
     </>

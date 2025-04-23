@@ -26,6 +26,7 @@ import ProtectedWrapper from "./routes/ProtectedWrapper/index";
 import DoctorsList from "./Page/Home/pages/DoctorsList";
 import Resource from "./Page/Profile/Components/Resource";
 import JournalPage from "./Page/Home/components/JournalPage";
+import UserProfileModal from "./Page/Profile/Components/userprofile";
 
 const publicRoutes = [
   { path: "/login", element: <Login /> },
@@ -210,7 +211,7 @@ const protectedRoutes = [
     ),
   },
   {
-    path: "/profile",
+    path: "/doctor/profile",
     element: (
       <ProtectedWrapper>
         <DefaultProfile>
@@ -219,6 +220,7 @@ const protectedRoutes = [
       </ProtectedWrapper>
     ),
   },
+  
   {
     path: "/doctors",
     element: (

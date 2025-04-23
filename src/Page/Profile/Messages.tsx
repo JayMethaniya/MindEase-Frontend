@@ -179,6 +179,7 @@ const Messages = () => {
           setSendMessage={setSendMessage}
           receivedMessage={receivedMessage}
           onBack={handleBack}
+          online={currentChat ? checkOnline(currentChat) : false}
         />
       </div>
     </div>
