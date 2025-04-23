@@ -51,7 +51,7 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }: SidebarProps) {
               <Home /> <span>Home</span>
             </Link>
             <Link
-              to="/profile"
+              to="/doctor/profile"
               className="flex items-center space-x-2 bg-[#3a8585] p-3 rounded-3xl hover:bg-[#1E4747]"
             >
               <User /> <span>Profile</span>

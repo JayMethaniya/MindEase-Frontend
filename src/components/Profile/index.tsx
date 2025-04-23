@@ -10,6 +10,10 @@ interface ProfileProps {
   isDoctor?: boolean;
 }
 
+interface LogoutResponse {
+  message: string;
+}
+
 const Profile: React.FC<ProfileProps> = ({ profilePhoto, isDoctor }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
@@ -22,29 +26,26 @@ const Profile: React.FC<ProfileProps> = ({ profilePhoto, isDoctor }) => {
       const token = localStorage.getItem('token');
       if (!token) {
         console.error('No token found');
+        localStorage.clear();
+        navigate('/login');
         return;
       }
 
-      await axios.post(
-        'http://localhost:3001/auth/logout',
-        {},
-        {
-          headers: { 
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          withCredentials: true
-        }
-      );
-      
-      // Clear all local storage
+      const response = await axios({
+        method: 'post',
+        url: 'http://localhost:3001/user/logout',
+        headers: { 
+          Authorization: `Bearer ${token}`
+        },
+        withCredentials: true
+      });
+
+      // Clear storage and redirect only after successful logout
       localStorage.clear();
-      
-      // Navigate to login page
       navigate('/login');
-    } catch (error) {
-      console.error('Logout failed:', error);
-      // Even if the API call fails, clear local storage and redirect
+    } catch (error: any) {
+      console.error('Logout failed:', error?.response?.data?.message || error.message);
+      // If server error occurs, still clear local storage and redirect
       localStorage.clear();
       navigate('/login');
     }

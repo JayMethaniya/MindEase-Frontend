@@ -3,6 +3,8 @@ import { FormEvent, useState } from "react";
 import axios from "axios";
 import Google from "../../../assets/google.png";
 import { Link } from "react-router-dom";
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 interface FormData {
   email: string;
@@ -54,6 +56,37 @@ const Login: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    try {
+      const decoded: any = jwtDecode(credentialResponse.credential);
+      const response = await axios.post<LoginResponse>(
+        "http://localhost:3001/user/google-login",
+        {
+          email: decoded.email,
+          fullName: decoded.name,
+          googleId: decoded.sub
+        }
+      );
+      
+      if (response.status === 200) {
+        const { user, token } = response.data;
+        setMessage("Login successful!");
+        localStorage.setItem("token", token);
+        localStorage.setItem("role", user.role);
+        localStorage.setItem("userId", user.id);
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      }
+    } catch (error: any) {
+      setMessage(error.response?.data?.error || "Google login failed");
+    }
+  };
+
+  const handleGoogleError = () => {
+    setMessage("Google login failed");
   };
 
   return (
@@ -131,10 +164,15 @@ const Login: React.FC = () => {
 
             {/* Social Login Buttons */}
             <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6">
-              <button className="w-full sm:w-auto border border-[#DDECE9] text-[#287371] hover:bg-[#DDECE9] transition px-6 py-3 rounded-lg flex justify-center items-center font-semibold">
-                <img src={Google} alt="google" className="w-5 h-5 mr-2" />
-                <span>Google</span>
-              </button>
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                useOneTap
+                theme="outline"
+                shape="rectangular"
+                text="signin_with"
+                locale="en"
+              />
             </div>
 
             <p className="text-sm text-[#287371] mt-6 text-center">

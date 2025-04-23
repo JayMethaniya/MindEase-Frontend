@@ -6,7 +6,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F1E8DD]">
+    <div className="flex h-screen overflow-hidden bg-[#f1f8f8]">
       {/* Sidebar */}
       <Sidebar
         sidebarOpen={sidebarOpen}

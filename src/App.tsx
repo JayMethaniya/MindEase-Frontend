@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import Challenge from "./components/7dayChallenge/index";
 import DefaultLayout from "./Layout/Default";
@@ -115,7 +116,7 @@ const protectedRoutes = [
       </ProtectedWrapper>
     ),
   },
-  
+
   {
     path: "/page/quiz",
     element: (
@@ -220,7 +221,7 @@ const protectedRoutes = [
       </ProtectedWrapper>
     ),
   },
-  
+
   {
     path: "/doctors",
     element: (
@@ -236,7 +237,14 @@ const protectedRoutes = [
 const router = createBrowserRouter([...publicRoutes, ...protectedRoutes]);
 
 const App: React.FC = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <GoogleOAuthProvider
+      clientId="
+333693592575-dur4giru92e0i5n1afo93b1nra1hfnbk.apps.googleusercontent.com"
+    >
+      <RouterProvider router={router} />
+    </GoogleOAuthProvider>
+  );
 };
 
 export default App;
