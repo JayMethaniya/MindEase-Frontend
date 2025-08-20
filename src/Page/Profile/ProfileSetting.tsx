@@ -113,7 +113,8 @@ const userId = localStorage.getItem("userId");
       });
 
       alert("Profile updated successfully");
-      navigate("/profile");
+      {isDoctor ? navigate("/profile"):navigate("/")}
+      
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Failed to update profile");

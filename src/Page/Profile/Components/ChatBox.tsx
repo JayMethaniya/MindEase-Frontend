@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import InputEmoji from "react-input-emoji";
 import { format } from "timeago.js";
-import { IoArrowBack } from "react-icons/io5";
 import UserProfileModal from "./userprofile";
+import { ArrowBack } from "@mui/icons-material";
 
 interface ChatBoxProps {
   chat: Chat | null;
@@ -143,7 +143,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
               onClick={onBack}
               className="md:hidden text-white hover:bg-teal-700 p-1 rounded-full"
             >
-              <IoArrowBack size={24} />
+              <ArrowBack />
             </button>
             <div 
               className="flex items-center space-x-3 cursor-pointer flex-1"

@@ -2,9 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { io, Socket } from "socket.io-client";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import Conversation from "./Components/Conversation";
-import ChatBox from "./Components/ChatBox";
-import DefaultLayout from "./Default";
+import Conversation from "../../Page/Profile/Components/Conversation";
+import ChatBox from "../../Page/Profile/Components/ChatBox";
 
 interface ConversationData {
   members: string[];
@@ -111,7 +110,7 @@ const Messages = () => {
     <div className="flex flex-col md:flex-row w-full h-full overflow-hidden">
       <div className="md:hidden">
         {!currentChat && (
-          <DefaultLayout>
+         
             <div className="w-full p-4 bg-white rounded-lg shadow-md">
               <h1 className="text-xl font-bold mb-3">Messages</h1>
               <div className="text-gray-600 h-[80vh] w-full rounded-lg p-2 overflow-y-auto">
@@ -134,7 +133,7 @@ const Messages = () => {
                 )}
               </div>
             </div>
-          </DefaultLayout>
+         
         )}
       </div>
 
@@ -188,7 +187,7 @@ const Messages = () => {
     <>
       <div className="md:hidden overflow-hidden">{content}</div>
       <div className="hidden md:block">
-        <DefaultLayout>{content}</DefaultLayout>
+        {content}
       </div>
     </>
   );

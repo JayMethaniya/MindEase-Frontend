@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Person, Settings, Logout } from '@mui/icons-material';
+import { Person, Settings, Logout, Message } from '@mui/icons-material';
 import axios from 'axios';
 import UserProfileModal from '../../Page/Profile/Components/userprofile';
 import ProfileSetting from '../../Page/Profile/ProfileSetting';
+import UserMessage from '../../components/UserMessage/index';
 
 interface ProfileProps {
   profilePhoto?: string;
@@ -18,6 +19,7 @@ const Profile: React.FC<ProfileProps> = ({ profilePhoto, isDoctor }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [chat, setChat] = useState(false)
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
 
@@ -95,6 +97,16 @@ const Profile: React.FC<ProfileProps> = ({ profilePhoto, isDoctor }) => {
             Settings
           </button>
           <button
+            onClick={() => {
+              setChat(true);
+              setIsOpen(false);
+            }}
+            className="flex items-center w-full px-4 py-2 text-gray-800 hover:bg-gray-100"
+          >
+           <Message fontSize='small' className='mr-2'/>
+            Chat
+          </button>
+          <button
             onClick={handleLogout}
             className="flex items-center w-full px-4 py-2 text-gray-800 hover:bg-gray-100"
           >
@@ -142,6 +154,40 @@ const Profile: React.FC<ProfileProps> = ({ profilePhoto, isDoctor }) => {
                 </svg>
               </button>
               <ProfileSetting />
+            </div>
+          </div>
+        </div>
+      )}
+      {!isDoctor && chat   && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"
+          onClick={() => setChat(false)}
+        >
+          <div 
+            className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4">
+              <button
+                onClick={() => setChat(false)}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 bg-white rounded-full p-2 shadow-md"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+              <UserMessage />
             </div>
           </div>
         </div>

@@ -129,9 +129,9 @@ const Header: React.FC = () => {
           <div className="flex items-center gap-4">
             {token ? (
               <div className="flex items-center gap-4">
-                <button className="p-2 rounded-full h-10 w-10 flex items-center justify-center">
+                {/* <button className="p-2 rounded-full h-10 w-10 flex items-center justify-center">
                   <Notifications className="text-[#1E4747]" fontSize="large" />
-                </button>
+                </button> */}
                 <Profile profilePhoto={profile} isDoctor={isDoctor} />
               </div>
             ) : (
@@ -190,11 +190,11 @@ const Header: React.FC = () => {
               { name: "Contact Us", path: "/page/contactUs" },
             ]}
           />
-          {token && !isDoctor && (
+          {/* {token && !isDoctor && (
             <div className="p-2">
               <Profile profilePhoto={profile} isDoctor={isDoctor} />
             </div>
-          )}
+          )} */}
         </nav>
       </aside>
     </>
