@@ -27,9 +27,21 @@ const Signup: React.FC = () => {
     setLoading(true);
     setMessage(null);
     try {
+      // Create FormData object for multipart/form-data
+      const formPayload = new FormData();
+      formPayload.append('fullName', formData.fullName);
+      formPayload.append('email', formData.email);
+      formPayload.append('password', formData.password);
+      formPayload.append('role', formData.role);
+
       const response = await axios.post(
         "http://localhost:3001/user/signup",
-        formData
+        formPayload,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       if (response.status === 201) {
    
@@ -38,8 +50,20 @@ const Signup: React.FC = () => {
           navigate("/login");
         }, 1500);
       }
-    } catch (error) {
-      setMessage("Error signing up. Please try again.");
+    } catch (error: any) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        const errorMessage = error.response.data.message || error.response.data.errors?.[0]?.msg || "Error signing up. Please try again.";
+        setMessage(errorMessage);
+      } else if (error.request) {
+        // The request was made but no response was received
+        setMessage("No response from server. Please try again.");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        setMessage("Error setting up the request. Please try again.");
+      }
+      console.error("Signup Error:", error);
     } finally {
       setLoading(false);
     }
